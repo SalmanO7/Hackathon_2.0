@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { BiHeart } from "react-icons/bi";
 import { IoCartOutline, IoEyeOutline } from "react-icons/io5";
 
+
 // Interface for the product data
 interface ICartType {
   _id: string;
@@ -18,7 +19,7 @@ interface ICartType {
 
 const Page = () => {
   const { id } = useParams<{ id: string }>();
-  const [product, setProduct] = useState<ICartType | null>();
+  const [product, setProduct] = useState<ICartType | null>(null); // Initialize with null
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -28,16 +29,19 @@ const Page = () => {
     const fetchProduct = async () => {
       try {
         const productData: ICartType = await client.fetch(`*[_type == "product" && _id == "${id}"]{
-     _id,
-     title,
-     description,
-     price,
-     discountPercentage,
-     "imageUrl": productImage.asset->url
-             }[0]`);
+          _id,
+          title,
+          description,
+          price,
+          discountPercentage,
+          "imageUrl": productImage.asset->url
+        }[0]`);
+
+        console.log("Fetched product data:", productData); // Log fetched data for debugging
         setProduct(productData);
       } catch (err) {
         setError("Failed to load product details. Please try again later.");
+        console.error("Error fetching product:", err); // Log the error
       } finally {
         setLoading(false);
       }
@@ -62,11 +66,20 @@ const Page = () => {
     );
   }
 
+  if (!product) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <p className="text-red-500">Product not found.</p>
+      </div>
+    );
+  }
+
   return (
     <div>
+      {/* <Navbar /> */}
       <div className="p-4 md:p-10 bg-gray-50 min-h-screen">
         <nav className="text-sm flex justify-start sm:px-10 md:px-[60px] lg:px-[30px] xl:px-[70px] 2xl:px-[80px] text-gray-500 mb-6 px-10 md:pb-16">
-          Home / <span>Shop</span>
+          Home / <span >Shop</span>
         </nav>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-y-24 sm:gap-y-44 gap-8">
