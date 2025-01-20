@@ -22,7 +22,7 @@ const CartPage = () => {
       <Navbar />
       <div className="p-4 md:p-10 bg-gray-50 min-h-screen">
         <h1 className="text-2xl font-bold text-gray-800 mb-6">Your Cart</h1>
-        <div className="space-y-4">
+        <div className="">
           {cartItems.map((item) => (
             <div key={item.product._id} className="flex justify-between items-center border-b py-4">
               <div className="flex items-center">
@@ -35,22 +35,24 @@ const CartPage = () => {
                 />
                 <span className="ml-4">{item.product.title}</span>
               </div>
-              <div className="flex items-center">
-                <button
-                  onClick={() => decreaseQuantity(item.product._id)}
-                  className="px-2 py-1 border border-gray-300 rounded-full mr-2"
-                >
-                  -
-                </button>
-                <span className="px-4">{item.quantity}</span>
-                <button
-                  onClick={() => increaseQuantity(item.product._id)}
-                  className="px-2 py-1 border border-gray-300 rounded-full ml-2"
-                >
-                  +
-                </button>
+              <div className="flex items-center gap-x-7">
+                <div className='flex items-center '>
+                  <button
+                    onClick={() => decreaseQuantity(item.product._id)}
+                    className="px-2 py-1 border border-gray-300 rounded-full mr-2"
+                  >
+                    -
+                  </button>
+                  <span className="px-4">{item.quantity}</span>
+                  <button
+                    onClick={() => increaseQuantity(item.product._id)}
+                    className="px-2 py-1 border border-gray-300 rounded-full ml-2"
+                  >
+                    +
+                  </button>
+                </div>
+                <span className="font-semibold">${item.product.price * item.quantity}</span>
               </div>
-              <span className="font-semibold">${item.product.price * item.quantity}</span>
             </div>
           ))}
         </div>
