@@ -18,6 +18,7 @@ interface ICartType {
   description: string;
   price: number;
   discountPercentage: number;
+  tags: [];
   imageUrl: string;
 }
 
@@ -28,7 +29,7 @@ const Page = () => {
   const [loading, setLoading] = useState(true);
 
 
-  const { addToCart } = useCart();
+  const { addToCart, addToWishlist } = useCart();
 
   useEffect(() => {
     if (!id) return; // Avoid fetching if `id` is not available
@@ -41,7 +42,8 @@ const Page = () => {
           description,
           price,
           discountPercentage,
-          "imageUrl": productImage.asset->url
+          "imageUrl": productImage.asset->url,
+          tags
         }[0]`);
 
         console.log("Fetched product data:", productData); // Log fetched data for debugging
@@ -128,8 +130,16 @@ const Page = () => {
             <p className="text-gray-600 mb-6 leading-relaxed text-sm">
               {product.description.split(' ').slice(0, 100).join(' ')}{product.description.split(' ').length > 100 ? '...' : ''}
             </p>
+            <p className='flex justify-start items-center flex-wrap gap-3 uppercase'>{product.tags.map((tag) => {
+              return (
+                <span key={tag} className="inline-block px-2 py-1 text-sm font-semibold text-gray-800 bg-gray-200 rounded-xl">
+                  #{tag}
+                </span>
+              );
+            })}</p>
 
-            <div className="border-b border-2 mb-6"></div>
+
+            <div className="border-b border-2 my-6"></div>
 
             <div className="mb-6">
               <div className="flex gap-3">
@@ -145,21 +155,23 @@ const Page = () => {
               <button className="w-2/6 sm:w-3/6 md:w-auto px-6 lg:px-8 py-3  bg-[#01B5DA] text-white rounded-md hover:bg-[#1F2937]">
                 Buy Now
               </button>
-              <button className="w-10  px-3 py-3 border rounded-full bg-white hover:bg-gray-100">
+              <button
+                onClick={() => addToWishlist(product)}
+                className="w-10  px-3 py-3 border rounded-full bg-white hover:bg-gray-100">
                 <BiHeart />
               </button>
               <button
                 onClick={() => addToCart(product)}
                 className="w-10  px-3 py-3 border rounded-full bg-white hover:bg-gray-100">
-              <IoCartOutline />
-            </button>
-            <button className="w-10 md:w-auto px-3 py-3 border rounded-full bg-white hover:bg-gray-100">
-              <IoEyeOutline />
-            </button>
+                <IoCartOutline />
+              </button>
+              <button className="w-10 md:w-auto px-3 py-3 border rounded-full bg-white hover:bg-gray-100">
+                <IoEyeOutline />
+              </button>
+            </div>
           </div>
         </div>
       </div>
-    </div>
     </div >
   );
 };
