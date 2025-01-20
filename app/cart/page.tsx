@@ -25,28 +25,28 @@ const CartPage = () => {
         <div className="">
           {cartItems.map((item) => (
             <div key={item.product._id} className="flex justify-between items-center border-b py-4">
-              <div className="flex items-center">
+              <div className="flex items-start sm:items-center flex-col gap-2 sm:flex-row">
                 <img
                   src={item.product.imageUrl}
                   alt={item.product.title}
                   width={50}
                   height={50}
-                  className="rounded"
+                  className="rounded ml-5 sm:ml-0"
                 />
                 <span className="ml-4">{item.product.title}</span>
               </div>
-              <div className="flex items-center gap-x-7">
+              <div className="flex items-center gap-x-5 sm:gap-x-16">
                 <div className='flex items-center '>
                   <button
                     onClick={() => decreaseQuantity(item.product._id)}
-                    className="px-2 py-1 border border-gray-300 rounded-full mr-2"
+                    className="px-2 py-1 border border-gray-300 rounded-full "
                   >
                     -
                   </button>
                   <span className="px-4">{item.quantity}</span>
                   <button
                     onClick={() => increaseQuantity(item.product._id)}
-                    className="px-2 py-1 border border-gray-300 rounded-full ml-2"
+                    className="px-2 py-1 border border-gray-300 rounded-full "
                   >
                     +
                   </button>
@@ -65,10 +65,10 @@ const CartPage = () => {
 
         {/* Mobile responsive style */}
         <div className="mt-8 flex justify-between items-center space-x-4">
-          <button className="w-full sm:w-auto px-6 py-3 bg-red-500 text-white rounded-md hover:bg-red-600">
+          <button className="w-full text-sm sm:text-base sm:w-auto sm:px-6 py-2 sm:py-3 bg-red-500 text-white rounded-md hover:bg-red-600">
             Proceed to Checkout
           </button>
-          <button className="w-full sm:w-auto px-6 py-3 border border-gray-300 rounded-md hover:bg-gray-100">
+          <button className="w-full text-sm sm:text-base sm:w-auto sm:px-6 py-2 sm:py-3 border border-gray-300 rounded-md hover:bg-gray-100">
             Continue Shopping
           </button>
         </div>
