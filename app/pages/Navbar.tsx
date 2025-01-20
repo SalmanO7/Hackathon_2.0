@@ -8,15 +8,18 @@ import { IoCartOutline, IoSearchOutline } from "react-icons/io5";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+
   return (
     <>
       <Header />
       <nav className="bg-white shadow-md">
-        <div className="container mx-auto flex items-center justify-around px-4 py-4 sm:px-6 lg:px-8">
+        <div className="container mx-auto flex items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
+          {/* Brand Name */}
           <h1 className="text-lg font-bold text-gray-900">
             <Link href="/">Bandage</Link>
           </h1>
 
+          {/* Menu Links for md and above */}
           <div className="hidden md:flex items-center gap-6">
             <Link href="/" className="text-gray-700 hover:text-gray-900">
               Home
@@ -31,31 +34,25 @@ const Navbar = () => {
               Blog
             </Link>
             <Link href="/contact" className="text-gray-700 hover:text-gray-900">
-              Contact{" "}
+              Contact
             </Link>
-            <a href="#" className="text-gray-700 hover:text-gray-900">
-              Pages
-            </a>
           </div>
 
-          <div className="flex items-center justify-end gap-4">
-            <div className="flex justify-center text-blue-500 items-center">
-              <CiUser className="hidden xl:block text-[16px] text-blue-500" />
-              <h4>Login / Register</h4>
-            </div>
-            <a
-              href="#"
-              className="text-sm font-semibold  hover:text-gray-900 pr-2"
-            ></a>
-            <div className=" justify-center hidden xl:flex items-center gap-4 text-blue-500">
-              <IoSearchOutline className="text-xl" />
-              <Link href="/cart">
-                <IoCartOutline className="text-xl" />
-              </Link>
-              <FaRegHeart className="text-[16px]" />
-            </div>
+          {/* Icons Section - Always Visible */}
+          <div className="flex items-center gap-4 text-blue-500">
+            <IoSearchOutline className="text-xl" />
+            <Link href="/cart">
+              <IoCartOutline className="text-xl" />
+            </Link>
+            <Link href="/wishlist">
+              <FaRegHeart className="text-lg" />
+            </Link>
+            <Link href="/login">
+              <CiUser className="text-xl" />
+            </Link>
           </div>
 
+          {/* Menu Icon for md and below */}
           <button
             className="md:hidden text-gray-600"
             onClick={() => setIsOpen(!isOpen)}
@@ -93,39 +90,42 @@ const Navbar = () => {
             )}
           </button>
         </div>
-        {isOpen && (
-          <div className="md:hidden flex justify-center items-center gap-5 px-10 py-2 bg-gray-100">
-            <Link
-              href="/"
-              className="text-gray-700 font-medium hover:text-blue-600"
-            >
-              Home
-            </Link>
-            <Link
-              href="/shop"
-              className="text-gray-700 font-medium hover:text-blue-600"
-            >
-              Shop
-            </Link>
-            <Link
-              href="/about"
-              className="text-gray-700 font-medium hover:text-blue-600"
-            >
-              About
-            </Link>
 
-            <Link
-              href="/detail"
-              className="text-gray-700 font-medium hover:text-blue-600"
-            >
-              Blog
-            </Link>
-            <Link
-              href="/contact"
-              className="text-gray-700 font-medium hover:text-blue-600"
-            >
-              Contact
-            </Link>
+        {/* Mobile Menu */}
+        {isOpen && (
+          <div className="md:hidden bg-gray-100">
+            <div className="flex flex-col items-center py-4 gap-3">
+              <Link
+                href="/"
+                className="text-gray-700 font-medium hover:text-blue-600"
+              >
+                Home
+              </Link>
+              <Link
+                href="/shop"
+                className="text-gray-700 font-medium hover:text-blue-600"
+              >
+                Shop
+              </Link>
+              <Link
+                href="/about"
+                className="text-gray-700 font-medium hover:text-blue-600"
+              >
+                About
+              </Link>
+              <Link
+                href="/detail"
+                className="text-gray-700 font-medium hover:text-blue-600"
+              >
+                Blog
+              </Link>
+              <Link
+                href="/contact"
+                className="text-gray-700 font-medium hover:text-blue-600"
+              >
+                Contact
+              </Link>
+            </div>
           </div>
         )}
       </nav>
