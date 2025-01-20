@@ -6,34 +6,40 @@ export default function AboutNavbar() {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <nav className="bg-white shadow-md">
-      <div className="flex justify-between items-center px-4 py-3 md:px-8">
-        <h1 className="text-lg font-bold">Bandage</h1>
+    <nav className="bg-white shadow-md sticky top-0 z-50">
+      <div className="container mx-auto flex justify-between items-center px-4 py-4 sm:px-6 lg:px-8">
+        {/* Brand Name */}
+        <h1 className="text-lg font-bold text-gray-900">
+          <Link href="/">Bandage</Link>
+        </h1>
 
-        <ul className="hidden md:flex space-x-6">
-          <li className="hover:text-blue-600">
-            <Link href="/">Home</Link>
-          </li>
-          <li className="hover:text-blue-600">
-            <Link href="/product">Products</Link>
-          </li>
-          <li className="hover:text-blue-600">
-            <Link href="/price">Pricing</Link>
-          </li>
-          <li className="hover:text-blue-600">
-            <Link href="/contact">Contact</Link>
-          </li>
+        {/* Desktop Menu */}
+        <ul className="hidden md:flex items-center gap-6">
+          {["Home", "Products", "Pricing", "Contact"].map((item, index) => (
+            <li key={index}>
+              <Link
+                href={`/${item.toLowerCase()}`}
+                className="text-gray-700 font-medium hover:text-blue-600 transition"
+              >
+                {item}
+              </Link>
+            </li>
+          ))}
         </ul>
 
-        <div className="hidden md:flex space-x-4">
-          <button className="text-blue-600">Login</button>
-          <button className="bg-blue-600 text-white px-4 py-2 rounded-md">
-            Become a member
+        {/* Login & Member Buttons for Desktop */}
+        <div className="hidden md:flex items-center gap-4">
+          <button className="text-blue-600 font-medium hover:underline transition">
+            Login
+          </button>
+          <button className="bg-blue-600 text-white px-5 py-2 rounded-lg hover:bg-blue-500 transition">
+            Become a Member
           </button>
         </div>
 
+        {/* Mobile Menu Button */}
         <button
-          className="md:hidden text-gray-600"
+          className="md:hidden text-gray-600 focus:outline-none"
           onClick={() => setIsOpen(!isOpen)}
         >
           {isOpen ? (
@@ -70,33 +76,31 @@ export default function AboutNavbar() {
         </button>
       </div>
 
+      {/* Mobile Menu */}
       {isOpen && (
-        <div className="md:hidden flex justify-center items-center gap-5 px-10 py-2 bg-gray-100">
-          <Link
-            href="/"
-            className="text-gray-700 font-medium hover:text-blue-600"
-          >
-            Home
-          </Link>
-          <Link
-            href="/product"
-            className="text-gray-700 font-medium hover:text-blue-600"
-          >
-            Product
-          </Link>
-          <Link
-            href="/price"
-            className="text-gray-700 font-medium hover:text-blue-600"
-          >
-            
-            Pricing
-          </Link>
-          <Link
-            href="/contact"
-            className="text-gray-700 font-medium hover:text-blue-600"
-          >
-            Contact
-          </Link>
+        <div className="md:hidden bg-gray-100 border-t border-gray-200">
+          <ul className="flex flex-col items-center gap-4 py-4">
+            {["Home", "Products", "Pricing", "Contact"].map((item, index) => (
+              <li key={index}>
+                <Link
+                  href={`/${item.toLowerCase()}`}
+                  className="text-gray-700 font-medium hover:text-blue-600 transition"
+                >
+                  {item}
+                </Link>
+              </li>
+            ))}
+            <li>
+              <button className="text-blue-600 font-medium hover:underline transition">
+                Login
+              </button>
+            </li>
+            <li>
+              <button className="bg-blue-600 text-white px-5 py-2 rounded-lg hover:bg-blue-500 transition">
+                Become a Member
+              </button>
+            </li>
+          </ul>
         </div>
       )}
     </nav>
