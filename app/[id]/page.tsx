@@ -1,10 +1,14 @@
 "use client";
+
+import { useCart } from '@/context/Context';
 import { client } from "@/sanity/lib/client";
 import Image from "next/image";
+import Link from "next/link";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { BiHeart } from "react-icons/bi";
 import { IoCartOutline, IoEyeOutline } from "react-icons/io5";
+import Navbar from "../pages/Navbar";
 
 
 // Interface for the product data
@@ -22,6 +26,9 @@ const Page = () => {
   const [product, setProduct] = useState<ICartType | null>(null); // Initialize with null
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
+
+
+  const { addToCart } = useCart();
 
   useEffect(() => {
     if (!id) return; // Avoid fetching if `id` is not available
@@ -76,16 +83,16 @@ const Page = () => {
 
   return (
     <div>
-      {/* <Navbar /> */}
+      <Navbar />
       <div className="p-4 md:p-10 bg-gray-50 min-h-screen">
-        <nav className="text-sm flex justify-start sm:px-10 md:px-[60px] lg:px-[30px] xl:px-[70px] 2xl:px-[80px] text-gray-500 mb-6 px-10 md:pb-16">
-          Home / <span >Shop</span>
+        <nav className="text-sm flex justify-start gap-x-1 sm:px-10 md:px-[60px] lg:px-[30px] xl:px-[70px] 2xl:px-[80px] text-gray-500 mb-6 px-10 md:pb-4">
+          <Link href="/" >Home</Link> / <span className="text-black font-semibold">Shop</span>
         </nav>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-y-24 sm:gap-y-44 gap-8">
           <div className="flex flex-col justify-center items-start pt-10">
             <div className="col-span-3 flex justify-center items-start px-5 sm:px-10 md:px-[60px] lg:px-[30px] xl:px-[70px] 2xl:px-[80px]">
-              <div className="w-full py-10 h-[300px] md:w-[500px] md:h-[400px] flex items-center justify-center">
+              <div className="w-full flex items-center justify-center">
                 <Image
                   src={product.imageUrl}
                   alt={product.title}
@@ -96,7 +103,7 @@ const Page = () => {
             </div>
           </div>
           <div>
-            <h1 className="text-base md:text-xl lg:text-2xl font-bold text-gray-800 mb-4">
+            <h1 className="pt-14 text-base md:text-xl lg:text-2xl font-bold text-gray-800 mb-4">
               {product.title}
             </h1>
             <p className="text-yellow-500 mb-2 flex items-center">
@@ -112,7 +119,7 @@ const Page = () => {
               </div>
             </div>
             <p className="text-gray-600 mb-6 leading-relaxed text-sm">
-              {product.description}
+              {product.description.split(' ').slice(0, 100).join(' ')}{product.description.split(' ').length > 100 ? '...' : ''}
             </p>
 
             <div className="border-b border-2 mb-6"></div>
@@ -134,7 +141,9 @@ const Page = () => {
               <button className="w-10  px-3 py-3 border rounded-full bg-white hover:bg-gray-100">
                 <BiHeart />
               </button>
-              <button className="w-10  px-3 py-3 border rounded-full bg-white hover:bg-gray-100">
+              <button
+                onClick={() => addToCart(product)}
+                className="w-10  px-3 py-3 border rounded-full bg-white hover:bg-gray-100">
                 <IoCartOutline />
               </button>
               <button className="w-10 md:w-auto px-3 py-3 border rounded-full bg-white hover:bg-gray-100">

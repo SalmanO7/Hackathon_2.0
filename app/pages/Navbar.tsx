@@ -49,7 +49,9 @@ const Navbar = () => {
             ></a>
             <div className=" justify-center hidden xl:flex items-center gap-4 text-blue-500">
               <IoSearchOutline className="text-xl" />
-              <IoCartOutline className="text-xl" />
+              <Link href="/cart">
+                <IoCartOutline className="text-xl" />
+              </Link>
               <FaRegHeart className="text-[16px]" />
             </div>
           </div>
@@ -111,7 +113,7 @@ const Navbar = () => {
             >
               About
             </Link>
-            
+
             <Link
               href="/detail"
               className="text-gray-700 font-medium hover:text-blue-600"

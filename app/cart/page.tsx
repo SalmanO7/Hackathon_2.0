@@ -1,86 +1,78 @@
-import Image from 'next/image'
-import React from 'react'
-import { BiHeart } from 'react-icons/bi'
-import { IoCartOutline, IoEyeOutline } from 'react-icons/io5'
+"use client";
+import { useCart } from '@/context/Context';
+import Navbar from '../pages/Navbar';
 
-const ShoppingCart = () => {
+const CartPage = () => {
+  const { cartItems, increaseQuantity, decreaseQuantity } = useCart();
+
+  const calculateSubtotal = () => {
+    return cartItems.reduce((total, item) => total + item.product.price * item.quantity, 0);
+  };
+
+  // if (cartItems.length === 0) {
+  //   return (
+  //     <div className="flex justify-center items-center h-screen">
+  //       <p>Your cart is empty.</p>
+  //     </div>
+  //   );
+  // }
+
   return (
-    <div>
+    <>
+      <Navbar />
       <div className="p-4 md:p-10 bg-gray-50 min-h-screen">
-        <nav className="text-sm flex justify-start  sm:px-10 md:px-[60px] lg:px-[30px] xl:px-[70px] 2xl:px-[80px] text-gray-500 mb-6 px-10 md:pb-16">
-          Home / <span>Shop</span>
-        </nav>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-y-24 sm:gap-y-44 gap-8">
-          <div className="flex flex-col justify-center items-start pt-10">
-            <div className="col-span-3 flex justify-center items-start px-5 sm:px-10 md:px-[60px] lg:px-[30px] xl:px-[70px] 2xl:px-[80px]">
-              <div className="w-full py-10 h-[300px] md:w-[500px] md:h-[400px]  flex items-center justify-center">
-                {/* <Image */}
-                {/* src={DetailImg} */}
-                //   alt="Main GamePad"
-                //   className="rounded-lg"
-                {/* /> */}
+        <h1 className="text-2xl font-bold text-gray-800 mb-6">Your Cart</h1>
+        <div className="space-y-4">
+          {cartItems.map((item) => (
+            <div key={item.product._id} className="flex justify-between items-center border-b py-4">
+              <div className="flex items-center">
+                <img
+                  src={item.product.imageUrl}
+                  alt={item.product.title}
+                  width={50}
+                  height={50}
+                  className="rounded"
+                />
+                <span className="ml-4">{item.product.title}</span>
               </div>
-            </div>
-            <div className="pl-10 md:ml-10 flex  pt-10 w-2/4 md:w-1/4 sm:flex-row justify-start items-center gap-4">
-              {/* <Image src={Detailimg2} alt="img" />
-              <Image src={Detailimg3} alt="img" /> */}
-            </div>
-          </div>
-          <div>
-            <h1 className="text-base md:text-xl lg:text-2xl font-bold text-gray-800 mb-4">
-              Floating Phone
-            </h1>
-            <p className="text-yellow-500 mb-2 flex items-center">
-              ★★★★☆{" "}
-              <span className="text-sm text-gray-500 ml-2">(150 Reviews)</span>
-            </p>
-            <div>
-              <p className="text-2xl font-semibold text-gray-800 mb-6">
-                $192.00
-              </p>
-              <div className="text-gray-500">
-                Availability: <span className="text-blue-500">in stock</span>
+              <div className="flex items-center">
+                <button
+                  onClick={() => decreaseQuantity(item.product._id)}
+                  className="px-2 py-1 border border-gray-300 rounded-full mr-2"
+                >
+                  -
+                </button>
+                <span className="px-4">{item.quantity}</span>
+                <button
+                  onClick={() => increaseQuantity(item.product._id)}
+                  className="px-2 py-1 border border-gray-300 rounded-full ml-2"
+                >
+                  +
+                </button>
               </div>
+              <span className="font-semibold">${item.product.price * item.quantity}</span>
             </div>
-            <p className="text-gray-600 mb-6 leading-relaxed text-sm">
-              PlayStation 5 Controller Skin High quality vinyl with air channel
-              adhesive for easy bubble-free install & mess-free removal.
-              Pressure-sensitive.
-            </p>
+          ))}
+        </div>
 
-            <div className="border-b border-2 mb-6"></div>
+        {/* Subtotal Section */}
+        <div className="flex justify-between items-center mt-6 border-t pt-6">
+          <span className="text-xl font-bold">Subtotal</span>
+          <span className="text-xl font-semibold">${calculateSubtotal()}</span>
+        </div>
 
-            <div className="mb-6">
-              <div className="flex gap-3">
-                <div className="w-8 h-8 rounded-full bg-blue-500 border-2 border-gray-300 cursor-pointer hover:ring-2 hover:ring-blue-500"></div>
-                <div className="w-8 h-8 rounded-full bg-green-500 border-2 border-gray-300 cursor-pointer hover:ring-2 hover:ring-red-500"></div>
-                <div className="w-8 h-8 rounded-full bg-orange-500 border-2 border-gray-300 cursor-pointer hover:ring-2 hover:ring-blue-500"></div>
-                <div className="w-8 h-8 rounded-full bg-black border-2 border-gray-300 cursor-pointer hover:ring-2 hover:ring-blue-500"></div>
-              </div>
-            </div>
-
-            {/* Buttons Section */}
-            <div className="flex items-center gap-4">
-              <button className="w-2/6 sm:w-3/6 md:w-auto px-6 lg:px-8 py-3 bg-red-500 text-white rounded-md hover:bg-red-600">
-                Buy Now
-              </button>
-              <button className="w-10  px-3 py-3 border rounded-full bg-white hover:bg-gray-100">
-                <BiHeart />
-              </button>
-              <button className="w-10  px-3 py-3 border rounded-full bg-white hover:bg-gray-100">
-                <IoCartOutline />
-              </button>
-              <button className="w-10 md:w-auto px-3 py-3 border rounded-full bg-white hover:bg-gray-100">
-                <IoEyeOutline />
-              </button>
-            </div>
-          </div>
+        {/* Mobile responsive style */}
+        <div className="mt-8 flex justify-between items-center space-x-4">
+          <button className="w-full sm:w-auto px-6 py-3 bg-red-500 text-white rounded-md hover:bg-red-600">
+            Proceed to Checkout
+          </button>
+          <button className="w-full sm:w-auto px-6 py-3 border border-gray-300 rounded-md hover:bg-gray-100">
+            Continue Shopping
+          </button>
         </div>
       </div>
+    </>
+  );
+};
 
-    </div>
-  )
-}
-
-export default ShoppingCart
+export default CartPage;
