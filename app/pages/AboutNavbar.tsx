@@ -8,13 +8,11 @@ export default function AboutNavbar() {
   return (
     <nav className="bg-white shadow-md">
       <div className="container mx-auto flex justify-between items-center px-4 py-4 sm:px-6 lg:px-8">
-        {/* Brand Name */}
         <h1 className="text-lg font-bold text-gray-900">
           <Link href="/">Bandage</Link>
         </h1>
 
 
-        {/* Menu Links for md and above */}
         <ul className="hidden md:flex items-center gap-6">
           <li>
             <Link
@@ -50,7 +48,6 @@ export default function AboutNavbar() {
           </li>
         </ul>
 
-        {/* Login and Member Button for md and above */}
         <div className="hidden md:flex items-center gap-4">
           <button className="text-blue-600 font-medium hover:underline">
             Login
@@ -60,7 +57,6 @@ export default function AboutNavbar() {
           </button>
         </div>
 
-        {/* Hamburger Menu Icon for small devices */}
         <button
           className="block md:hidden text-gray-600"
           onClick={() => setIsOpen(!isOpen)}
@@ -99,7 +95,6 @@ export default function AboutNavbar() {
         </button>
       </div>
 
-      {/* Mobile Menu */}
       {isOpen && (
         <div className="block md:hidden bg-gray-100 px-6 py-4">
           <ul className="flex flex-col items-center gap-4">

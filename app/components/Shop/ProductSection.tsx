@@ -4,7 +4,7 @@ import ProductSecondSection from "./ProductSecondSection";
 const ProductPage = () => {
   return (
     <div className="">
-      <div className="flex justify-center items-center gap-4 pt-6">
+      <div className="text-sm flex justify-center items-center gap-4 pt-6">
         <p>Description</p>
         <p>Additional Information</p>
         <p>

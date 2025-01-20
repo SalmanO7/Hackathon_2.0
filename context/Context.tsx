@@ -1,5 +1,5 @@
-"use client"
-import React, { createContext, useState, ReactNode, useContext } from 'react';
+"use client";
+import React, { createContext, useState, useEffect, ReactNode, useContext } from "react";
 
 interface ICartType {
   _id: string;
@@ -17,6 +17,7 @@ interface CartItem {
 
 interface CartContextProps {
   cartItems: CartItem[];
+  setCartItems: React.Dispatch<React.SetStateAction<CartItem[]>>; // Add this line
   addToCart: (product: ICartType) => void;
   removeFromCart: (productId: string) => void;
   increaseQuantity: (productId: string) => void;
@@ -30,7 +31,9 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
 
   const addToCart = (product: ICartType) => {
     setCartItems((prevItems) => {
-      const existingItem = prevItems.find((item) => item.product._id === product._id);
+      const existingItem = prevItems.find(
+        (item) => item.product._id === product._id
+      );
       if (existingItem) {
         return prevItems.map((item) =>
           item.product._id === product._id
@@ -44,13 +47,17 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const removeFromCart = (productId: string) => {
-    setCartItems((prevItems) => prevItems.filter(item => item.product._id !== productId));
+    setCartItems((prevItems) =>
+      prevItems.filter((item) => item.product._id !== productId)
+    );
   };
 
   const increaseQuantity = (productId: string) => {
     setCartItems((prevItems) =>
       prevItems.map((item) =>
-        item.product._id === productId ? { ...item, quantity: item.quantity + 1 } : item
+        item.product._id === productId
+          ? { ...item, quantity: item.quantity + 1 }
+          : item
       )
     );
   };
@@ -66,7 +73,16 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
   };
 
   return (
-    <CartContext.Provider value={{ cartItems, addToCart, removeFromCart, increaseQuantity, decreaseQuantity }}>
+    <CartContext.Provider
+      value={{
+        cartItems,
+        setCartItems, // Include setCartItems here
+        addToCart,
+        removeFromCart,
+        increaseQuantity,
+        decreaseQuantity,
+      }}
+    >
       {children}
     </CartContext.Provider>
   );
@@ -75,7 +91,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
 export const useCart = () => {
   const context = useContext(CartContext);
   if (!context) {
-    throw new Error('useCart must be used within a CartProvider');
+    throw new Error("useCart must be used within a CartProvider");
   }
   return context;
 };

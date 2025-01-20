@@ -111,9 +111,16 @@ const Page = () => {
               <span className="text-sm text-gray-500 ml-2">(150 Reviews)</span>
             </p>
             <div>
-              <p className="text-2xl font-semibold text-gray-800 mb-6">
-                ${product.price}
-              </p>
+              {
+                product.discountPercentage > 0 ?
+                  <p className=" text-green-800 font-semibold">
+                    ${product.price} <span className="text-gray-300">{product.discountPercentage}%</span>
+                  </p>
+                  :
+                  <p className=" text-green-800 font-semibold">
+                    ${product.price}
+                  </p>
+              }
               <div className="text-gray-500">
                 Availability: <span className="text-blue-500">in stock</span>
               </div>
@@ -135,7 +142,7 @@ const Page = () => {
 
             {/* Buttons Section */}
             <div className="flex items-center gap-4">
-              <button className="w-2/6 sm:w-3/6 md:w-auto px-6 lg:px-8 py-3 bg-red-500 text-white rounded-md hover:bg-red-600">
+              <button className="w-2/6 sm:w-3/6 md:w-auto px-6 lg:px-8 py-3  bg-[#01B5DA] text-white rounded-md hover:bg-[#1F2937]">
                 Buy Now
               </button>
               <button className="w-10  px-3 py-3 border rounded-full bg-white hover:bg-gray-100">
@@ -144,16 +151,16 @@ const Page = () => {
               <button
                 onClick={() => addToCart(product)}
                 className="w-10  px-3 py-3 border rounded-full bg-white hover:bg-gray-100">
-                <IoCartOutline />
-              </button>
-              <button className="w-10 md:w-auto px-3 py-3 border rounded-full bg-white hover:bg-gray-100">
-                <IoEyeOutline />
-              </button>
-            </div>
+              <IoCartOutline />
+            </button>
+            <button className="w-10 md:w-auto px-3 py-3 border rounded-full bg-white hover:bg-gray-100">
+              <IoEyeOutline />
+            </button>
           </div>
         </div>
       </div>
     </div>
+    </div >
   );
 };
 
