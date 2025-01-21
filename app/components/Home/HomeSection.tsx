@@ -14,6 +14,7 @@ import IconImg4 from "@/public/assets/fa-brands-4.png";
 import IconImg5 from "@/public/assets/fa-brands-5.png";
 import IconImg6 from "@/public/assets/fa-brands-6.png";
 import Footer from "@/app/pages/Footer";
+import Link from "next/link";
 
 const HomeSection = () => {
   return (
@@ -22,7 +23,7 @@ const HomeSection = () => {
         <h2 className="text-base md:text-xl lg:text-2xl font-semibold">Shop</h2>
         <h3 className="flex justify-center items-center gap-3">
           Home <MdArrowForwardIos className="text-xl md:text-xl" />
-          <span className="text-gray-400">Shop</span>
+          <Link href="/detail" className="text-gray-400">Shop</Link>
         </h3>
       </div>
       <div>

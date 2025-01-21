@@ -1,0 +1,16 @@
+.custom-toast {
+    background: linear-gradient(135deg, #1F2937, #2575fc); /* Gradient background */
+    color: white; /* Text color */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+
+.custom-toast-body {
+    font-size: 14px; /* Adjust text size */
+    font-weight: 500; /* Slightly bold */
+}
+
+/* Customize progress bar color if needed */
+.Toastify__progress-bar {
+    background: #ffffff; /* White progress bar */
+}

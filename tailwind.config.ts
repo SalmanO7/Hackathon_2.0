@@ -12,6 +12,9 @@ export default {
         background: "var(--background)",
         foreground: "var(--foreground)",
       },
+      screens: {
+        xs: "400px", // Custom screen size for 400px
+      },
     },
   },
   plugins: [],

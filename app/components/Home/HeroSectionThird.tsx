@@ -7,6 +7,7 @@ interface IProduct {
   _id: string;
   title: string;
   price: number;
+  description: string;
   dicountPercentage: number;
   imageUrl: string;
 }
@@ -18,6 +19,7 @@ const getData = async () => {
   title,
   price,
   dicountPercentage,
+  description,
   "imageUrl": productImage.asset->url
 }
 `)
@@ -46,7 +48,7 @@ const HeroSectionThird = async () => {
               </Link>
             </div>
             <h2 className="font-semibold">{data.title}</h2>
-            <h4 className="text-gray-500">Engish Department</h4>
+            <h4 className="text-gray-500">{data.description.split(" ").slice(0, 3).join(" ")}</h4>
 
             {
               data.dicountPercentage > 0 ?

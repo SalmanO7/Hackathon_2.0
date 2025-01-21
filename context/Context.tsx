@@ -1,5 +1,14 @@
 "use client";
-import React, { createContext, useState, useEffect, ReactNode, useContext } from "react";
+import React, {
+  createContext,
+  useState,
+  useEffect,
+  ReactNode,
+  useContext,
+} from "react";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import "@/app/components/style.css";
 
 // Type for product data
 interface ICartType {
@@ -19,7 +28,7 @@ interface CartItem {
 
 // Cart context interface definition
 interface CartContextProps {
-  cartItems: CartItem[]; // Array of cart items
+  cartItems: CartItem[]; 
   setCartItems: React.Dispatch<React.SetStateAction<CartItem[]>>; // Function to set cart items state
   addToCart: (product: ICartType) => void; // Function to add product to cart
   removeFromCart: (productId: string) => void; // Function to remove product from cart
@@ -42,11 +51,9 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
   // Function to add product to wishlist
   const addToWishlist = (product: ICartType) => {
     const exists = wishlist.find((item) => item._id === product._id);
-    if (exists) {
-      alert("Product is already in your wishlist.");
-    } else {
+
+    if (!exists) {
       setWishlist([...wishlist, product]);
-      alert("Product added to your wishlist.");
     }
   };
 

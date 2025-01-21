@@ -1,13 +1,78 @@
 "use client";
 import Header from "@/app/components/Header";
+import { useCart } from "@/context/Context";
+import { client } from "@/sanity/lib/client";
+import Image from "next/image";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { CiUser } from "react-icons/ci";
 import { FaRegHeart } from "react-icons/fa";
-import { IoCartOutline, IoSearchOutline } from "react-icons/io5";
+import { IoCartOutline, IoSearchOutline, IoClose } from "react-icons/io5";
+
+interface IProduct {
+  _id: string;
+  title: string;
+  price: number;
+  description: string;
+  dicountPercentage: number;
+  imageUrl: string;
+}
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [filteredResults, setFilteredResults] = useState<IProduct[]>([]);
+  const [isSearchActive, setIsSearchActive] = useState(false);
+  const [allProducts, setAllProducts] = useState<IProduct[]>([]);
+  const { cartItems, wishlist } = useCart();
+
+  // Fetching data from Sanity
+  const getData = async () => {
+    const data = await client.fetch(
+      `*[_type == "product"]{
+        _id,
+        title,
+        price,
+        dicountPercentage,
+        description,
+        "imageUrl": productImage.asset->url
+      }`
+    );
+    setAllProducts(data);
+  };
+
+  // Handle search input changes
+  const handleSearch = (query: string) => {
+    setSearchQuery(query);
+    if (query) {
+      const results = allProducts.filter((product) =>
+        product.title.toLowerCase().includes(query.toLowerCase())
+      );
+      setFilteredResults(results.slice(0, 3)); // Limit to 3 results
+    } else {
+      setFilteredResults([]);
+    }
+  };
+
+  // Clear the search
+  const clearSearch = () => {
+    setSearchQuery("");
+    setFilteredResults([]);
+    setIsSearchActive(false);
+  };
+
+  // Toggle the search bar visibility
+  const toggleSearchBar = () => {
+    setIsSearchActive((prevState) => !prevState);
+    if (isSearchActive) {
+      clearSearch(); // Close and clear the search when clicked again
+    }
+  };
+
+  useEffect(() => {
+    // Fetch product data when the component mounts
+    getData();
+  }, []);
 
   return (
     <>
@@ -38,19 +103,90 @@ const Navbar = () => {
             </Link>
           </div>
 
-          {/* Icons Section - Always Visible */}
           <div className="flex items-center gap-4 text-blue-500">
-            <IoSearchOutline className="text-xl" />
+            <div className="">
+              <IoSearchOutline
+                className="text-xl cursor-pointer"
+                onClick={toggleSearchBar}
+              />
+
+              {/* Search Input */}
+              {isSearchActive && (
+                <div className="absolute top-20 right-16 xs:right-[22%] md:right-[17%] w-60 px-4 py-2 mt-8 rounded-md bg-white shadow-md border border-gray-300 z-20">
+                  <input
+                    type="text"
+                    placeholder="Search products..."
+                    value={searchQuery}
+                    onChange={(e) => handleSearch(e.target.value)}
+                    className="w-full p-1 focus:outline-none"
+                  />
+
+                  {searchQuery && (
+                    <IoClose
+                      className="absolute right-2 text-xl top-3 text-gray-500 cursor-pointer"
+                      onClick={clearSearch}
+                    />
+                  )}
+                </div>
+              )}
+            </div>
+
+            {/* Cart Icon */}
             <Link href="/cart">
-              <IoCartOutline className="text-xl" />
+              <div className="relative">
+                <IoCartOutline className="text-xl" />
+                {cartItems.length > 0 && (
+                  <span className="absolute -top-2 -right-2 text-white text-xs w-5 h-5 flex items-center justify-center rounded-full bg-[#1F2937] hover:bg-[#01B5DA]">
+                    {cartItems.length}
+                  </span>
+                )}
+              </div>
             </Link>
+
+            {/* Wishlist Icon */}
             <Link href="/wishlist">
-              <FaRegHeart className="text-lg" />
+              <div className="relative">
+                <FaRegHeart className="text-lg" />
+                {wishlist.length > 0 && (
+                  <span className="absolute -top-2 -right-2 text-white text-xs w-5 h-5 flex items-center justify-center rounded-full bg-[#1F2937] hover:bg-[#01B5DA]">
+                    {wishlist.length}
+                  </span>
+                )}
+              </div>
             </Link>
+
+            {/* User Icon */}
             <Link href="/login">
               <CiUser className="text-xl" />
             </Link>
           </div>
+
+          {/* Search Results */}
+          {/* {searchQuery && filteredResults.length > 0 && (
+            <div className="absolute top-20 right-40 left-0 w-full bg-white shadow-md z-10">
+              <div className="flex flex-col items-center py-4 gap-3 bg-gray-50">
+                {filteredResults.slice(0, 5).map((product) => (
+                  <div key={product._id}>
+                    <div className="flex items-center">
+                      <Image
+                        src={product.imageUrl}
+                        alt={product.title}
+                        className="w-10 mr-2 border-none"
+                        width={20}
+                        height={20}
+                      />
+                      <Link
+                        href={`${product._id}`}
+                        className="text-gray-700 hover:text-blue-600"
+                      >
+                        <span>{product.title}</span>
+                      </Link>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )} */}
 
           {/* Menu Icon for md and below */}
           <button
@@ -129,6 +265,30 @@ const Navbar = () => {
           </div>
         )}
       </nav>
+
+      {/* Search Results */}
+      {searchQuery && filteredResults.length > 0 && (
+        <div className="absolute top-44 left-0 w-full bg-white shadow-md z-10">
+          <div className="flex flex-col items-start pl-10 sm:pl-44 py-4 gap-3">
+            {filteredResults.map((product) => (
+              <Link
+                key={product._id}
+                href={`/${product._id}`}
+                className="text-gray-700 hover:text-blue-600"
+              >
+                <div className="flex items-center">
+                  <img
+                    src={product.imageUrl}
+                    alt={product.title}
+                    className="w-10 h-10 mr-2"
+                  />
+                  <span>{product.title}</span>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </div>
+      )}
     </>
   );
 };

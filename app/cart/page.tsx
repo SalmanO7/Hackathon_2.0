@@ -21,6 +21,9 @@ const CartPage = () => {
     localStorage.setItem("cartItems", JSON.stringify(cartItems));
   }, [cartItems]);
 
+  const removeFromCart = (productId: any) => {
+    setCartItems(cartItems.filter((item) => item.product._id !== productId));
+  };
   const calculateSubtotal = () => {
     return cartItems.reduce(
       (total, item) => total + item.product.price * item.quantity,
@@ -63,7 +66,7 @@ const CartPage = () => {
                   />
                   <span className="ml-4">{item.product.title}</span>
                 </div>
-                <div className="flex items-center gap-x-5 sm:gap-x-16">
+                <div className="flex items-center flex-col flex-col-reverse sm:flex-row gap-5 sm:gap-x-16">
                   <div className="flex items-center ">
                     <button
                       onClick={() => decreaseQuantity(item.product._id)}
@@ -79,9 +82,17 @@ const CartPage = () => {
                       +
                     </button>
                   </div>
-                  <span className="font-semibold">
-                    ${item.product.price * item.quantity}
-                  </span>
+                  <div className="flex items-center gap-4">
+                    <span className="font-semibold">
+                      ${item.product.price * item.quantity}
+                    </span>
+                    <button
+                      onClick={() => removeFromCart(item.product._id)}
+                      className="px-4 py-2 text-sm bg-[#01B5DA] text-white rounded-md hover:bg-[#1F2937]"
+                    >
+                      Remove
+                    </button>
+                  </div>
                 </div>
               </div>
             ))}

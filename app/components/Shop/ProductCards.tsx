@@ -13,6 +13,7 @@ interface IProduct {
   _id: string;
   title: string;
   price: number;
+  description:string;
   dicountPercentage: number;
   imageUrl: string;
 }
@@ -23,6 +24,7 @@ const getData = async () => {
   title,
   price,
   dicountPercentage,
+  description,
   "imageUrl": productImage.asset->url
 }
 `)
@@ -41,18 +43,26 @@ const ProductCards = async () => {
       </h2>
       <div className="border my-5"></div>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-y-20 gap-x-5 gap-8">
-        {products.map((data: IProduct) => {
+      {products.map((data: IProduct) => {
           return <div key={data._id} className="flex flex-col justify-center gap-2 items-center">
             <div className="w-[200px]">
               <Link href={`/${data._id}`} >
                 <Image src={data.imageUrl} alt={data.title} width={200} height={100} />
               </Link>
             </div>
-            <h2 className="font-semibold">Graphic</h2>
-            <h4 className="text-gray-500">Engish Department</h4>
-            <p className="text-gray-300">
-              $16.48 <span className="text-green-800 font-semibold">$6.58</span>
-            </p>
+            <h2 className="font-semibold">{data.title}</h2>
+            <h4 className="text-gray-500">{data.description.split(" ").slice(0, 3).join(" ")}</h4>
+
+            {
+              data.dicountPercentage > 0 ?
+                <p className=" text-green-800 font-semibold">
+                  ${data.price} <span className="text-gray-300">{data.dicountPercentage}%</span>
+                </p>
+                :
+                <p className=" text-green-800 font-semibold">
+                  ${data.price}
+                </p>
+            }
             <div className="flex justify-center items-start gap-1">
               <span className="bg-red-500 w-1 p-2 rounded-full"></span>
               <span className="bg-blue-500 w-1 p-2 rounded-full"></span>
