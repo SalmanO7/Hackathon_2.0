@@ -37,6 +37,7 @@ interface CartContextProps {
   addToWishlist: (product: ICartType) => void; // Function to add product to wishlist
   wishlist: ICartType[]; // List of items in wishlist
   setWishlist: React.Dispatch<React.SetStateAction<ICartType[]>>;
+  
 }
 
 // CartContext creation with types

@@ -29,6 +29,11 @@ const getData = async () => {
 
 const HeroSectionThird = async () => {
 
+
+
+
+  
+
   const products = await getData()
   return (
     <div className="w-full px-10 sm:px-24  md:px-36">

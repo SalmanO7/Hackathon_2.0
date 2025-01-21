@@ -1,6 +1,7 @@
 import Image from "next/image";
 import React from "react";
 import HeroSectionFifthImg from "@/public/assets/none.png";
+import Link from "next/link";
 
 const HeroSectionFifth = () => {
   return (
@@ -21,9 +22,9 @@ const HeroSectionFifth = () => {
             act, We know
           </p>
           <div className="flex flex-col md:flex-row justify-center items-center gap-6">
-            <button className="uppercase text-sm border border-green-500 bg-green-500 text-white rounded-md py-2 px-4">
+            <Link href="/cart" className="uppercase text-sm border border-green-500 bg-green-500 text-white rounded-md py-2 px-4">
               Buy Now
-            </button>
+            </Link>
             <button className="uppercase text-sm border border-green-500  text-green-500 rounded-md py-2 px-4">
               READ MORE
             </button>

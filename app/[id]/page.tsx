@@ -10,6 +10,8 @@ import { IoCartOutline, IoEyeOutline } from "react-icons/io5";
 import Navbar from "../pages/Navbar";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useRouter } from "next/navigation";
+
 
 interface ICartType {
   _id: string;
@@ -22,16 +24,22 @@ interface ICartType {
 }
 
 const Page = () => {
+  const router = useRouter();
   const { id } = useParams<{ id: string }>();
   const [product, setProduct] = useState<ICartType | null>(null); // Initialize with null
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
+  const [isImageOpen, setIsImageOpen] = useState(false);
 
   const { addToCart, addToWishlist } = useCart();
 
+  const handleBuyNow = () => {
+    router.push(`/checkout?productId=${product}`);
+  };
+
+
   useEffect(() => {
     if (!id) return; // Avoid fetching if `id` is not available
-
     const fetchProduct = async () => {
       try {
         const productData: ICartType =
@@ -85,6 +93,12 @@ const Page = () => {
       theme: "colored",
     });
   };
+
+
+  const toggleImageModal = () => {
+    setIsImageOpen(!isImageOpen);
+  };
+
 
   if (loading) {
     return (
@@ -187,7 +201,9 @@ const Page = () => {
             </div>
 
             <div className="flex items-center gap-4">
-              <button className="w-2/6 sm:w-3/6 md:w-auto px-6 lg:px-8 py-3  bg-[#01B5DA] text-white rounded-md hover:bg-[#1F2937]">
+              <button
+                onClick={handleBuyNow}
+                className="w-2/6 sm:w-3/6 md:w-auto xs:px-6 lg:px-8 py-3  bg-[#01B5DA] text-white rounded-md hover:bg-[#1F2937]">
                 Buy Now
               </button>
               <button
@@ -202,14 +218,31 @@ const Page = () => {
               >
                 <IoCartOutline />
               </button>
-              <button className="w-10 md:w-auto px-3 py-3 border rounded-full bg-white hover:bg-gray-100">
+              <button
+                onClick={toggleImageModal}
+                className="w-10 md:w-auto px-3 py-3 border rounded-full bg-white hover:bg-gray-100">
                 <IoEyeOutline />
               </button>
             </div>
           </div>
         </div>
       </div>
+
+      {isImageOpen && (
+        <div className="fixed inset-0 flex justify-center items-center bg-gray-800 bg-opacity-50 z-50">
+          <div className="relative bg-white p-2 rounded-md">
+            <button
+              onClick={toggleImageModal}
+              className="absolute top-0 right-0 p-1 px-4 m-1 text-white bg-[#01B5DA] rounded-full"
+            >
+              X
+            </button>
+            <Image src={product.imageUrl} alt={product.title} width={400} height={400} />
+          </div>
+        </div>
+      )}
     </div>
+
   );
 };
 

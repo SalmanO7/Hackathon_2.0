@@ -2,7 +2,7 @@
 import Header from "@/app/components/Header";
 import { useCart } from "@/context/Context";
 import { client } from "@/sanity/lib/client";
-import Image from "next/image";
+import { SignedIn, SignedOut, useClerk, UserButton } from '@clerk/nextjs';
 import Link from "next/link";
 import React, { useState, useEffect } from "react";
 import { CiUser } from "react-icons/ci";
@@ -25,8 +25,10 @@ const Navbar = () => {
   const [isSearchActive, setIsSearchActive] = useState(false);
   const [allProducts, setAllProducts] = useState<IProduct[]>([]);
   const { cartItems, wishlist } = useCart();
-
-  // Fetching data from Sanity
+  const { openSignIn } = useClerk();
+  
+  
+  
   const getData = async () => {
     const data = await client.fetch(
       `*[_type == "product"]{
@@ -41,7 +43,6 @@ const Navbar = () => {
     setAllProducts(data);
   };
 
-  // Handle search input changes
   const handleSearch = (query: string) => {
     setSearchQuery(query);
     if (query) {
@@ -54,14 +55,12 @@ const Navbar = () => {
     }
   };
 
-  // Clear the search
   const clearSearch = () => {
     setSearchQuery("");
     setFilteredResults([]);
     setIsSearchActive(false);
   };
 
-  // Toggle the search bar visibility
   const toggleSearchBar = () => {
     setIsSearchActive((prevState) => !prevState);
     if (isSearchActive) {
@@ -70,7 +69,6 @@ const Navbar = () => {
   };
 
   useEffect(() => {
-    // Fetch product data when the component mounts
     getData();
   }, []);
 
@@ -79,12 +77,10 @@ const Navbar = () => {
       <Header />
       <nav className="bg-white shadow-md">
         <div className="container mx-auto flex items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
-          {/* Brand Name */}
           <h1 className="text-lg font-bold text-gray-900">
             <Link href="/">Bandage</Link>
           </h1>
 
-          {/* Menu Links for md and above */}
           <div className="hidden md:flex items-center gap-6">
             <Link href="/" className="text-gray-700 hover:text-gray-900">
               Home
@@ -109,8 +105,6 @@ const Navbar = () => {
                 className="text-xl cursor-pointer"
                 onClick={toggleSearchBar}
               />
-
-              {/* Search Input */}
               {isSearchActive && (
                 <div className="absolute top-20 right-16 xs:right-[22%] md:right-[17%] w-60 px-4 py-2 mt-8 rounded-md bg-white shadow-md border border-gray-300 z-20">
                   <input
@@ -131,7 +125,6 @@ const Navbar = () => {
               )}
             </div>
 
-            {/* Cart Icon */}
             <Link href="/cart">
               <div className="relative">
                 <IoCartOutline className="text-xl" />
@@ -143,7 +136,6 @@ const Navbar = () => {
               </div>
             </Link>
 
-            {/* Wishlist Icon */}
             <Link href="/wishlist">
               <div className="relative">
                 <FaRegHeart className="text-lg" />
@@ -154,41 +146,28 @@ const Navbar = () => {
                 )}
               </div>
             </Link>
+            <SignedOut>
+              <button
+                className="flex items-center justify-center w-8 h-8 rounded-full bg-gray-700 text-white"
+                onClick={() => openSignIn()} 
+              >
+                <CiUser className="text-xl" />
+              </button>
+            </SignedOut>
 
-            {/* User Icon */}
-            <Link href="/login">
-              <CiUser className="text-xl" />
-            </Link>
+            <SignedIn>
+              <UserButton
+                appearance={{
+                  elements: {
+                    userButtonAvatarBox: "w-8 h-8 rounded-full", // Customize avatar appearance
+                  },
+                }}
+              />
+            </SignedIn>
           </div>
 
-          {/* Search Results */}
-          {/* {searchQuery && filteredResults.length > 0 && (
-            <div className="absolute top-20 right-40 left-0 w-full bg-white shadow-md z-10">
-              <div className="flex flex-col items-center py-4 gap-3 bg-gray-50">
-                {filteredResults.slice(0, 5).map((product) => (
-                  <div key={product._id}>
-                    <div className="flex items-center">
-                      <Image
-                        src={product.imageUrl}
-                        alt={product.title}
-                        className="w-10 mr-2 border-none"
-                        width={20}
-                        height={20}
-                      />
-                      <Link
-                        href={`${product._id}`}
-                        className="text-gray-700 hover:text-blue-600"
-                      >
-                        <span>{product.title}</span>
-                      </Link>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          )} */}
 
-          {/* Menu Icon for md and below */}
+
           <button
             className="md:hidden text-gray-600"
             onClick={() => setIsOpen(!isOpen)}

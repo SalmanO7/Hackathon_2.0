@@ -3,10 +3,12 @@ import { useEffect } from "react";
 import { useCart } from "@/context/Context";
 import Navbar from "../pages/Navbar";
 import Link from "next/link";
+import { useRouter } from "next/navigation"; // Import useRouter
 
 const CartPage = () => {
   const { cartItems, setCartItems, increaseQuantity, decreaseQuantity } =
     useCart();
+  const router = useRouter(); // Initialize useRouter
 
   // Load cart items from local storage when the component mounts
   useEffect(() => {
@@ -24,6 +26,7 @@ const CartPage = () => {
   const removeFromCart = (productId: any) => {
     setCartItems(cartItems.filter((item) => item.product._id !== productId));
   };
+
   const calculateSubtotal = () => {
     return cartItems.reduce(
       (total, item) => total + item.product.price * item.quantity,
@@ -31,10 +34,20 @@ const CartPage = () => {
     );
   };
 
+  const handleProceedToCheckout = () => {
+    if (cartItems.length === 0) {
+      alert("Your cart is empty!");
+      return;
+    }
+
+    // Navigate to the checkout page with cart data (if necessary, you can store the cart in a state/context)
+    router.push(`/checkout`);
+  };
+
   return (
     <>
       <Navbar />
-      <nav className="sm:px-6 md:px-9 xl:pl-16  text-sm flex justify-start gap-x-1 sm:px-10  text-gray-500 mb-6 px-10 py-6 md:py-8">
+      <nav className="md:px-9 xl:pl-16  text-sm flex justify-start gap-x-1 sm:px-10  text-gray-500 mb-6 px-10 py-6 md:py-8">
         <Link href="/">Home</Link> /{" "}
         <span className="text-black font-semibold">WishList</span>
       </nav>
@@ -66,7 +79,7 @@ const CartPage = () => {
                   />
                   <span className="ml-4">{item.product.title}</span>
                 </div>
-                <div className="flex items-center flex-col flex-col-reverse sm:flex-row gap-5 sm:gap-x-16">
+                <div className="flex items-center flex-col-reverse sm:flex-row gap-5 sm:gap-x-16">
                   <div className="flex items-center ">
                     <button
                       onClick={() => decreaseQuantity(item.product._id)}
@@ -106,7 +119,10 @@ const CartPage = () => {
           </div>
 
           <div className="mt-8 flex justify-between items-center space-x-4">
-            <button className="w-full text-sm sm:text-base sm:w-auto sm:px-6 py-2 sm:py-3 bg-[#01B5DA] text-white rounded-md hover:bg-[#1F2937]">
+            <button
+              onClick={handleProceedToCheckout} // Attach functionality here
+              className="w-full text-sm sm:text-base sm:w-auto sm:px-6 py-2 sm:py-3 bg-[#01B5DA] text-white rounded-md hover:bg-[#1F2937]"
+            >
               Proceed to Checkout
             </button>
             <button className="w-full text-sm sm:text-base sm:w-auto sm:px-6 py-2 sm:py-3 border border-gray-300 rounded-md hover:bg-gray-100">

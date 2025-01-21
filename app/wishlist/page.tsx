@@ -1,16 +1,15 @@
 "use client";
 import React, { useEffect } from "react";
-import { useCart } from "@/context/Context"; // Import the context to access wishlist
+import { useCart } from "@/context/Context"; 
 import Link from "next/link";
 import Navbar from "../pages/Navbar";
-import { toast, ToastContainer } from "react-toastify"; // Import Toastify
+import { toast, ToastContainer } from "react-toastify"; 
 import "react-toastify/dist/ReactToastify.css";
 import "@/app/components/style.css";
 
 const WishList = () => {
-  const { wishlist, setWishlist } = useCart(); // Get wishlist and setWishlist from context
+  const { wishlist, setWishlist } = useCart(); 
 
-  // Load wishlist from local storage when the component mounts
   useEffect(() => {
     const storedWishlist = localStorage.getItem("wishlist");
     if (storedWishlist) {
@@ -18,7 +17,6 @@ const WishList = () => {
     }
   }, [setWishlist]);
 
-  // Save wishlist to local storage whenever it changes
   useEffect(() => {
     localStorage.setItem("wishlist", JSON.stringify(wishlist));
   }, [wishlist]);

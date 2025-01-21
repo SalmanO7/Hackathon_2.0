@@ -1,6 +1,7 @@
 import Image from "next/image";
 import React from "react";
 import HeroImg from "@/public/assets/shop-hero-2-png-picture-1 (1).png";
+import Link from "next/link";
 
 const HeroSectionFourth = () => {
   return (
@@ -17,7 +18,7 @@ const HeroSectionFourth = () => {
           </p>
           <div className="flex flex-col md:flex-row justify-center items-center gap-6">
             <p className="text-xl font-semibold">$16.58</p>
-            <button className="uppercase border border-green-500 bg-green-500 rounded-md py-1 px-2 md:py-2 md:px-4">Add To Cart</button>
+            <Link href="/cart" className="uppercase border border-green-500 bg-green-500 rounded-md py-1 px-2 md:py-2 md:px-4">Add To Cart</Link>
           </div>
         </div>
 

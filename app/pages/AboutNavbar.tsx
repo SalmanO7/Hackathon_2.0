@@ -1,9 +1,13 @@
 "use client";
 import Link from "next/link";
 import React, { useState } from "react";
+import { SignedIn, SignedOut, useClerk, UserButton } from '@clerk/nextjs';
+import { CiUser } from "react-icons/ci";
+
 
 export default function AboutNavbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const { openSignIn } = useClerk();
 
   return (
     <nav className="bg-white shadow-md">
@@ -49,12 +53,16 @@ export default function AboutNavbar() {
         </ul>
 
         <div className="hidden md:flex items-center gap-4">
-          <button className="text-blue-600 font-medium hover:underline">
-            Login
-          </button>
           <button className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-500">
             Become a Member
           </button>
+          <UserButton
+            appearance={{
+              elements: {
+                userButtonAvatarBox: 'w-8 h-8 rounded-full',
+              },
+            }}
+          />
         </div>
 
         <button
@@ -131,15 +139,28 @@ export default function AboutNavbar() {
               </Link>
             </li>
             <li>
-              <button className="text-blue-600 font-medium hover:underline">
-                Login
-              </button>
-            </li>
-            <li>
               <button className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-500">
                 Become a Member
               </button>
             </li>
+            <SignedOut>
+              <button
+                className="flex items-center justify-center w-8 h-8 rounded-full bg-gray-700 text-white"
+                onClick={() => openSignIn()}
+              >
+                <CiUser className="text-xl" />
+              </button>
+            </SignedOut>
+
+            <SignedIn>
+              <UserButton
+                appearance={{
+                  elements: {
+                    userButtonAvatarBox: "w-8 h-8 rounded-full", // Customize avatar appearance
+                  },
+                }}
+              />
+            </SignedIn>
           </ul>
         </div>
       )}
