@@ -11,10 +11,10 @@ type PurchaseData = {
 };
 
 const client = sanityClient({
-    projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID, 
+    projectId: "nkb8duzw", 
     dataset: "production",
     useCdn: false,
-    token: process.env.NEXT_PUBLIC_SANITY_PROJECT_TOKEN,
+    token: "skg4UAzOkcRvheZJMWb6qfnQ8eU4Qm2B8esmV7BWITsQRbKv4RyLQK0xrTVOyDDw5po4cVy4896Iyl2iaeIucWOA6rpbPhHEUsbvgK6KXM9uX5rLJZJNk4Y4h0PVIEVSwa6aaQKyQNVOBZKvjWt9rt7FBsnjKn8GhqBHqUZIrXFOndhoNdbW",
 });
 
 export async function POST(request: Request) {

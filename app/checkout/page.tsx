@@ -7,7 +7,6 @@ import Navbar from "../pages/Navbar";
 const CheckoutPage = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
-
   const productId = searchParams.get("productId");
 
   if (!productId) {
@@ -32,17 +31,14 @@ const CheckoutPage = () => {
     address: "",
   });
 
-  // Handle input field changes
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
-  // Handle form submission
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Generate a unique user ID
     const userId = Math.random().toString(36).substring(2, 15);
     const purchaseData = {
       userId,
@@ -61,7 +57,7 @@ const CheckoutPage = () => {
 
       if (response.ok) {
         alert("Purchase tracked successfully!");
-        router.push("/"); // Redirect to homepage
+        router.push("/"); 
       } else {
         alert(`Failed to track purchase. Status: ${response.status}`);
       }
