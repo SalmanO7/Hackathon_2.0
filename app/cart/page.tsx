@@ -5,7 +5,8 @@ import Navbar from "../pages/Navbar";
 import Link from "next/link";
 
 const CartPage = () => {
-  const { cartItems, setCartItems, increaseQuantity, decreaseQuantity } = useCart();
+  const { cartItems, setCartItems, increaseQuantity, decreaseQuantity } =
+    useCart();
 
   // Load cart items from local storage when the component mounts
   useEffect(() => {
@@ -21,12 +22,19 @@ const CartPage = () => {
   }, [cartItems]);
 
   const calculateSubtotal = () => {
-    return cartItems.reduce((total, item) => total + item.product.price * item.quantity, 0);
+    return cartItems.reduce(
+      (total, item) => total + item.product.price * item.quantity,
+      0
+    );
   };
 
   return (
     <>
       <Navbar />
+      <nav className="sm:px-6 md:px-9 xl:pl-16  text-sm flex justify-start gap-x-1 sm:px-10  text-gray-500 mb-6 px-10 py-6 md:py-8">
+        <Link href="/">Home</Link> /{" "}
+        <span className="text-black font-semibold">WishList</span>
+      </nav>
       {cartItems.length === 0 ? (
         <div className="flex justify-center items-center pt-40 pb-16">
           <p>
@@ -81,7 +89,9 @@ const CartPage = () => {
 
           <div className="flex justify-between items-center mt-6 border-t pt-6">
             <span className="text-xl font-bold">Subtotal</span>
-            <span className="text-xl font-semibold">${calculateSubtotal()}</span>
+            <span className="text-xl font-semibold">
+              ${calculateSubtotal()}
+            </span>
           </div>
 
           <div className="mt-8 flex justify-between items-center space-x-4">
