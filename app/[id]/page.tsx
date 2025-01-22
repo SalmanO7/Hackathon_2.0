@@ -10,7 +10,7 @@ import { IoCartOutline, IoEyeOutline } from "react-icons/io5";
 import Navbar from "../pages/Navbar";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useRouter } from "next/navigation";
+// import { useRouter } from "next/navigation";
 
 
 interface ICartType {
@@ -24,7 +24,7 @@ interface ICartType {
 }
 
 const Page = () => {
-  const router = useRouter();
+  // const router = useRouter();
   const { id } = useParams<{ id: string }>();
   const [product, setProduct] = useState<ICartType | null>(null); // Initialize with null
   const [error, setError] = useState<string | null>(null);
