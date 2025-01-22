@@ -3,14 +3,11 @@ import { useEffect } from "react";
 import { useCart } from "@/context/Context";
 import Navbar from "../pages/Navbar";
 import Link from "next/link";
-// import { useRouter } from "next/navigation"; // Import useRouter
 
 const CartPage = () => {
   const { cartItems, setCartItems, increaseQuantity, decreaseQuantity } =
     useCart();
-  // const router = useRouter(); // Initialize useRouter
 
-  // Load cart items from local storage when the component mounts
   useEffect(() => {
     const storedCartItems = localStorage.getItem("cartItems");
     if (storedCartItems) {
@@ -18,7 +15,6 @@ const CartPage = () => {
     }
   }, [setCartItems]);
 
-  // Save cart items to local storage whenever they change
   useEffect(() => {
     localStorage.setItem("cartItems", JSON.stringify(cartItems));
   }, [cartItems]);

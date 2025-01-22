@@ -10,7 +10,6 @@ import { IoCartOutline, IoEyeOutline } from "react-icons/io5";
 import Navbar from "../pages/Navbar";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-// import { useRouter } from "next/navigation";
 
 
 interface ICartType {
@@ -33,9 +32,6 @@ const Page = () => {
 
   const { addToCart, addToWishlist } = useCart();
 
-  // const handleBuyNow = () => {
-  //   router.push(`/checkout?productId=${product}`);
-  // };
 
 
   useEffect(() => {
@@ -53,11 +49,9 @@ const Page = () => {
           tags
         }[0]`);
 
-        console.log("Fetched product data:", productData); // Log fetched data for debugging
         setProduct(productData);
       } catch (err) {
         setError("Failed to load product details. Please try again later.");
-        console.error("Error fetching product:", err); // Log the error
       } finally {
         setLoading(false);
       }
