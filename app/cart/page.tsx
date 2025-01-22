@@ -118,17 +118,14 @@ const CartPage = () => {
           </div>
 
 
-          {/* <div className="mt-8 flex justify-between items-center space-x-4">
-            <button
-              // onClick={handleProceedToCheckout} // Attach functionality here
+          <div className="mt-8 flex justify-between items-center space-x-4">
+            <Link href="/checkout"
+            
               className="w-full text-sm sm:text-base sm:w-auto sm:px-6 py-2 sm:py-3 bg-[#01B5DA] text-white rounded-md hover:bg-[#1F2937]"
             >
               Proceed to Checkout
-            </button>
-            <button className="w-full text-sm sm:text-base sm:w-auto sm:px-6 py-2 sm:py-3 border border-gray-300 rounded-md hover:bg-gray-100">
-              Continue Shopping
-            </button>
-          </div> */}
+            </Link>
+          </div>
         </div>
       )}
     </>
