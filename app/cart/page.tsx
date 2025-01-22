@@ -48,7 +48,7 @@ const CartPage = () => {
       <Navbar />
       <nav className="md:px-9 xl:pl-16  text-sm flex justify-start gap-x-1 sm:px-10  text-gray-500 mb-6 px-10 py-6 md:py-8">
         <Link href="/">Home</Link> /{" "}
-        <span className="text-black font-semibold">WishList</span>
+        <span className="text-black font-semibold">Your Cart</span>
       </nav>
       {cartItems.length === 0 ? (
         <div className="flex justify-center items-center pt-40 pb-16">
@@ -117,7 +117,7 @@ const CartPage = () => {
             </span>
           </div>
 
-          <div className="mt-8 flex justify-between items-center space-x-4">
+          {/* <div className="mt-8 flex justify-between items-center space-x-4">
             <button
               // onClick={handleProceedToCheckout} // Attach functionality here
               className="w-full text-sm sm:text-base sm:w-auto sm:px-6 py-2 sm:py-3 bg-[#01B5DA] text-white rounded-md hover:bg-[#1F2937]"
@@ -127,7 +127,7 @@ const CartPage = () => {
             <button className="w-full text-sm sm:text-base sm:w-auto sm:px-6 py-2 sm:py-3 border border-gray-300 rounded-md hover:bg-gray-100">
               Continue Shopping
             </button>
-          </div>
+          </div> */}
         </div>
       )}
     </>
