@@ -3,12 +3,12 @@ import { useEffect } from "react";
 import { useCart } from "@/context/Context";
 import Navbar from "../pages/Navbar";
 import Link from "next/link";
-import { useRouter } from "next/navigation"; // Import useRouter
+// import { useRouter } from "next/navigation"; // Import useRouter
 
 const CartPage = () => {
   const { cartItems, setCartItems, increaseQuantity, decreaseQuantity } =
     useCart();
-  const router = useRouter(); // Initialize useRouter
+  // const router = useRouter(); // Initialize useRouter
 
   // Load cart items from local storage when the component mounts
   useEffect(() => {
@@ -34,15 +34,15 @@ const CartPage = () => {
     );
   };
 
-  const handleProceedToCheckout = () => {
-    if (cartItems.length === 0) {
-      alert("Your cart is empty!");
-      return;
-    }
+  // const handleProceedToCheckout = () => {
+  //   if (cartItems.length === 0) {
+  //     alert("Your cart is empty!");
+  //     return;
+  //   }
 
     // Navigate to the checkout page with cart data (if necessary, you can store the cart in a state/context)
-    router.push(`/checkout`);
-  };
+  //   router.push(`/checkout`);
+  // };
 
   return (
     <>
@@ -120,7 +120,7 @@ const CartPage = () => {
 
           <div className="mt-8 flex justify-between items-center space-x-4">
             <button
-              onClick={handleProceedToCheckout} // Attach functionality here
+{/*               onClick={handleProceedToCheckout} // Attach functionality here */}
               className="w-full text-sm sm:text-base sm:w-auto sm:px-6 py-2 sm:py-3 bg-[#01B5DA] text-white rounded-md hover:bg-[#1F2937]"
             >
               Proceed to Checkout
