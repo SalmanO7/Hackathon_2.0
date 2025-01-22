@@ -25,6 +25,7 @@ const CartPage = () => {
 
   const removeFromCart = (productId: any) => {
     setCartItems(cartItems.filter((item) => item.product._id !== productId));
+    
   };
 
   const calculateSubtotal = () => {
@@ -121,7 +122,7 @@ const CartPage = () => {
           <div className="mt-8 flex justify-between items-center space-x-4">
             <Link href="/checkout"
             
-              className="w-full text-sm sm:text-base sm:w-auto sm:px-6 py-2 sm:py-3 bg-[#01B5DA] text-white rounded-md hover:bg-[#1F2937]"
+              className="w-full text-sm sm:text-base sm:w-auto px-4 sm:px-6 py-2 sm:py-3 bg-[#01B5DA] text-white rounded-md hover:bg-[#1F2937]"
             >
               Proceed to Checkout
             </Link>

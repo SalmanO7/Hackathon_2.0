@@ -134,7 +134,7 @@ const CheckoutPage = () => {
                 <div className="flex justify-center mt-8">
                     <button
                         onClick={handleConfirmOrder}
-                        className="px-6 py-3 bg-[#01B5DA] text-white rounded-md hover:bg-[#1F2937]"
+                        className="sm:px-6 px-2 py-2 sm:py-3 bg-[#01B5DA] text-white rounded-md hover:bg-[#1F2937]"
                     >
                         Confirm Order
                     </button>

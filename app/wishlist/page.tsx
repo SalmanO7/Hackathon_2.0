@@ -21,16 +21,12 @@ const WishList = () => {
     localStorage.setItem("wishlist", JSON.stringify(wishlist));
   }, [wishlist]);
 
-  // Function to remove an item from the wishlist
   const removeFromWishlist = (productId: string) => {
-    // Find the product being removed
     const removedItem = wishlist.find((item) => item._id === productId);
 
-    // Remove the product from the wishlist
     setWishlist(wishlist.filter((item) => item._id !== productId));
 
   if (removedItem) {
-       // Show a toast notification with the product name
      toast.info(`Removed "${removedItem.title}" from wishlist`, {
         position: "bottom-right", // Position to bottom-right
         autoClose: 3000,
@@ -39,7 +35,6 @@ const WishList = () => {
         pauseOnHover: true,
         draggable: true,
         className: "custom-toast", // Apply gradient styling
-        // bodyClassName: "custom-toast-body", // Optional: for additional body styling
       });
     }
   };
