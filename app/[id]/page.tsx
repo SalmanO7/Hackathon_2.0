@@ -203,7 +203,7 @@ const Page = () => {
             <div className="flex items-center gap-4">
               <Link href="/cart"
                               //  onClick={handleBuyNow} 
-                className="w-2/6 sm:w-3/6 md:w-auto xs:px-6 lg:px-8 py-3  bg-[#01B5DA] text-white rounded-md hover:bg-[#1F2937]">
+                className="w-2/6 sm:w-3/6 md:w-auto px-3 text-center xs:px-6 lg:px-8 py-3  bg-[#01B5DA] text-white rounded-md hover:bg-[#1F2937]">
                 Buy Now
               </Link>
               <button
