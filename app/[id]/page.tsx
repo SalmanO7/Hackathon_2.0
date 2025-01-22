@@ -10,7 +10,7 @@ import { IoCartOutline, IoEyeOutline } from "react-icons/io5";
 import Navbar from "../pages/Navbar";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useRouter } from "next/navigation";
+// import { useRouter } from "next/navigation";
 
 
 interface ICartType {
@@ -24,7 +24,7 @@ interface ICartType {
 }
 
 const Page = () => {
-  const router = useRouter();
+  // const router = useRouter();
   const { id } = useParams<{ id: string }>();
   const [product, setProduct] = useState<ICartType | null>(null); // Initialize with null
   const [error, setError] = useState<string | null>(null);
@@ -33,9 +33,9 @@ const Page = () => {
 
   const { addToCart, addToWishlist } = useCart();
 
-  const handleBuyNow = () => {
-    router.push(`/checkout?productId=${product}`);
-  };
+  // const handleBuyNow = () => {
+  //   router.push(`/checkout?productId=${product}`);
+  // };
 
 
   useEffect(() => {
@@ -201,11 +201,10 @@ const Page = () => {
             </div>
 
             <div className="flex items-center gap-4">
-              <button
-                onClick={handleBuyNow}
+              <Link href="/cart"
                 className="w-2/6 sm:w-3/6 md:w-auto xs:px-6 lg:px-8 py-3  bg-[#01B5DA] text-white rounded-md hover:bg-[#1F2937]">
                 Buy Now
-              </button>
+              </Link>
               <button
                 onClick={() => handleAddToWishlist(product)}
                 className="w-10  px-3 py-3 border rounded-full bg-white hover:bg-gray-100"
