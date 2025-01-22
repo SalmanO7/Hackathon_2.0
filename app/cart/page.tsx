@@ -117,6 +117,7 @@ const CartPage = () => {
             </span>
           </div>
 
+
           {/* <div className="mt-8 flex justify-between items-center space-x-4">
             <button
               // onClick={handleProceedToCheckout} // Attach functionality here
