@@ -40,7 +40,6 @@ const CartPage = () => {
   //     return;
   //   }
 
-  //   // Navigate to the checkout page with cart data (if necessary, you can store the cart in a state/context)
   //   router.push(`/checkout`);
   // };
 
