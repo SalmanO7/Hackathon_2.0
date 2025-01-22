@@ -33,9 +33,9 @@ const Page = () => {
 
   const { addToCart, addToWishlist } = useCart();
 
-  const handleBuyNow = () => {
-    router.push(`/checkout?productId=${product}`);
-  };
+  // const handleBuyNow = () => {
+  //   router.push(`/checkout?productId=${product}`);
+  // };
 
 
   useEffect(() => {
@@ -201,11 +201,12 @@ const Page = () => {
             </div>
 
             <div className="flex items-center gap-4">
-              <button
-                onClick={handleBuyNow}
+              <Link 
+                    href="/cart"
+{/*                 onClick={handleBuyNow} */}
                 className="w-2/6 sm:w-3/6 md:w-auto xs:px-6 lg:px-8 py-3  bg-[#01B5DA] text-white rounded-md hover:bg-[#1F2937]">
                 Buy Now
-              </button>
+              </Link>
               <button
                 onClick={() => handleAddToWishlist(product)}
                 className="w-10  px-3 py-3 border rounded-full bg-white hover:bg-gray-100"
