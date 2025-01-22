@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import React from "react";
 
 const HeroSection = () => {
@@ -17,9 +18,9 @@ const HeroSection = () => {
         <p className="text-sm sm:text-base xl:text-lg">
           We know how large objects will act, but things on a small scale.
         </p>
-        <button className="bg-green-500 text-white px-6 py-2 rounded-md font-medium hover:bg-green-600">
+        <Link href="/product" className="bg-green-500 text-white px-6 py-2 rounded-md font-medium hover:bg-green-600">
           Shop Now
-        </button>
+        </Link>
       </div>
     </div>
   );

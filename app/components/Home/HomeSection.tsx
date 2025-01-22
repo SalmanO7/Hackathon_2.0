@@ -22,7 +22,7 @@ const HomeSection = () => {
         <h2 className="text-base md:text-xl lg:text-2xl font-semibold">Shop</h2>
         <h3 className="flex justify-center items-center gap-3">
           Home <MdArrowForwardIos className="text-xl md:text-xl" />
-          <Link href="/shop" className="text-gray-400">Shop</Link>
+          <Link href="/detail" className="text-gray-400">Shop</Link>
         </h3>
       </div>
       <div>
