@@ -228,18 +228,18 @@ const Page = () => {
           className="fixed inset-0 flex justify-center items-center bg-gray-800 bg-opacity-50 z-50"
           aria-hidden={!isImageOpen}
         >
-          <div className="relative bg-white p-4 rounded-md">
+          <div className="relative bg-white p-3 rounded-md">
             <button
               onClick={toggleImageModal}
-              className="absolute top-0 right-0 p-1 px-4 text-white bg-[#01B5DA] rounded-full"
+              className="absolute top-0 right-0 p-1 px-3 m-1 text-white bg-[#01B5DA] rounded-full"
             >
               X
             </button>
             <Image
               src={product.imageUrl}
               alt={product.title}
-              width={400}
-              height={400}
+              width={340}
+              height={340}
               priority
             />
           </div>
