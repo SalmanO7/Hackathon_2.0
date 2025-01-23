@@ -81,7 +81,7 @@ const Page = () => {
     toast.success(`${product.title} added to your cart!`, {
       position: "bottom-right",
       autoClose: 3000,
-      theme: "colored",
+      theme: "light",
     });
   };
 
@@ -90,7 +90,8 @@ const Page = () => {
     toast.success(`${product.title} added to your wishlist!`, {
       position: "bottom-right",
       autoClose: 3000,
-      theme: "colored",
+      theme: "dark",
+      
     });
   };
 

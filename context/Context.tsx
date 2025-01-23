@@ -6,11 +6,7 @@ import React, {
   ReactNode,
   useContext,
 } from "react";
-import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import "@/app/components/style.css";
 
-// Type for product data
 interface ICartType {
   _id: string;
   title: string;
@@ -20,45 +16,51 @@ interface ICartType {
   imageUrl: string;
 }
 
-// Type for cart items with quantity
 interface CartItem {
   product: ICartType;
   quantity: number;
 }
 
-// Cart context interface definition
 interface CartContextProps {
-  cartItems: CartItem[]; 
-  setCartItems: React.Dispatch<React.SetStateAction<CartItem[]>>; // Function to set cart items state
-  addToCart: (product: ICartType) => void; // Function to add product to cart
-  removeFromCart: (productId: string) => void; // Function to remove product from cart
-  increaseQuantity: (productId: string) => void; // Function to increase product quantity in cart
-  decreaseQuantity: (productId: string) => void; // Function to decrease product quantity in cart
-  addToWishlist: (product: ICartType) => void; // Function to add product to wishlist
-  wishlist: ICartType[]; // List of items in wishlist
+  cartItems: CartItem[];
+  setCartItems: React.Dispatch<React.SetStateAction<CartItem[]>>;
+  addToCart: (product: ICartType) => void;
+  removeFromCart: (productId: string) => void;
+  increaseQuantity: (productId: string) => void;
+  decreaseQuantity: (productId: string) => void;
+  addToWishlist: (product: ICartType) => void;
+  wishlist: ICartType[];
   setWishlist: React.Dispatch<React.SetStateAction<ICartType[]>>;
-  
 }
 
-// CartContext creation with types
 const CartContext = createContext<CartContextProps | undefined>(undefined);
 
-// CartProvider component
 export const CartProvider = ({ children }: { children: ReactNode }) => {
-  // State for cart items and wishlist
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [wishlist, setWishlist] = useState<ICartType[]>([]);
 
-  // Function to add product to wishlist
+  useEffect(() => {
+    const storedCartItems = localStorage.getItem("cartItems");
+    const storedWishlist = localStorage.getItem("wishlist");
+    if (storedCartItems) setCartItems(JSON.parse(storedCartItems));
+    if (storedWishlist) setWishlist(JSON.parse(storedWishlist));
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("cartItems", JSON.stringify(cartItems));
+  }, [cartItems]);
+
+  useEffect(() => {
+    localStorage.setItem("wishlist", JSON.stringify(wishlist));
+  }, [wishlist]);
+
   const addToWishlist = (product: ICartType) => {
     const exists = wishlist.find((item) => item._id === product._id);
-
     if (!exists) {
       setWishlist([...wishlist, product]);
     }
   };
 
-  // Function to add product to cart
   const addToCart = (product: ICartType) => {
     setCartItems((prevItems) => {
       const existingItem = prevItems.find(
@@ -76,14 +78,12 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
     });
   };
 
-  // Function to remove product from cart
   const removeFromCart = (productId: string) => {
     setCartItems((prevItems) =>
       prevItems.filter((item) => item.product._id !== productId)
     );
   };
 
-  // Function to increase product quantity in cart
   const increaseQuantity = (productId: string) => {
     setCartItems((prevItems) =>
       prevItems.map((item) =>
@@ -94,7 +94,6 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
     );
   };
 
-  // Function to decrease product quantity in cart
   const decreaseQuantity = (productId: string) => {
     setCartItems((prevItems) =>
       prevItems.map((item) =>
@@ -108,15 +107,15 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
   return (
     <CartContext.Provider
       value={{
-        setWishlist,
-        addToWishlist,
         cartItems,
         setCartItems,
         addToCart,
         removeFromCart,
         increaseQuantity,
         decreaseQuantity,
-        wishlist, // Provide wishlist state
+        wishlist,
+        setWishlist,
+        addToWishlist,
       }}
     >
       {children}
@@ -124,7 +123,6 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
   );
 };
 
-// Hook to use Cart context
 export const useCart = () => {
   const context = useContext(CartContext);
   if (!context) {
