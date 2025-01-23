@@ -49,7 +49,7 @@ const AboutProducts = () => {
       <div className="flex flex-col justify-center items-center gap-5">
         <div className="flex flex-col justify-center items-center gap-2 pt-16 pb-20">
           <h2 className="font-semibold text-xl xl:text-2xl">Meet Our Team</h2>
-          <p className="w-3/5 text-center">
+          <p className="w-full px-2 sm:px-0 sm:w-4/5 md:w-3/5 text-center">
             Problems trying to resolve the conflict between the two major realms
             of Classical physics: Newtonian mechanics{" "}
           </p>
