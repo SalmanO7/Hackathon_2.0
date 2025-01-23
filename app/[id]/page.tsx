@@ -4,13 +4,13 @@ import { client } from "@/sanity/lib/client";
 import Image from "next/image";
 import Link from "next/link";
 import { useParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { BiHeart } from "react-icons/bi";
 import { IoCartOutline, IoEyeOutline } from "react-icons/io5";
 import Navbar from "../pages/Navbar";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
+import { useClerk, useUser } from "@clerk/nextjs";
 
 interface ICartType {
   _id: string;
@@ -23,23 +23,22 @@ interface ICartType {
 }
 
 const Page = () => {
-  // const router = useRouter();
   const { id } = useParams<{ id: string }>();
-  const [product, setProduct] = useState<ICartType | null>(null); // Initialize with null
+  const [product, setProduct] = useState<ICartType | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [isImageOpen, setIsImageOpen] = useState(false);
 
   const { addToCart, addToWishlist } = useCart();
+  const { openSignIn } = useClerk(); // Clerk's method to open the sign-in modal
+  const { isSignedIn } = useUser(); // Check if the user is signed in
 
-
-
-  useEffect(() => {
-    if (!id) return; // Avoid fetching if `id` is not available
-    const fetchProduct = async () => {
-      try {
-        const productData: ICartType =
-          await client.fetch(`*[_type == "product" && _id == "${id}"]{
+  // Fetch product data
+  const fetchProduct = useCallback(async () => {
+    try {
+      if (!id) return;
+      const productData: ICartType = await client.fetch(
+        `*[_type == "product" && _id == $id]{
           _id,
           title,
           description,
@@ -47,52 +46,57 @@ const Page = () => {
           discountPercentage,
           "imageUrl": productImage.asset->url,
           tags
-        }[0]`);
+        }[0]`,
+        { id }
+      );
 
+      if (!productData) {
+        setError("Product not found. Please try again later.");
+      } else {
         setProduct(productData);
-      } catch (err) {
-        setError("Failed to load product details. Please try again later.");
-      } finally {
-        setLoading(false);
       }
-    };
-
-    fetchProduct();
+    } catch (err) {
+      setError("Failed to load product details. Please try again later.");
+    } finally {
+      setLoading(false);
+    }
   }, [id]);
 
+  useEffect(() => {
+    fetchProduct();
+  }, [fetchProduct]);
+
   const handleAddToCart = (product: ICartType) => {
+    if (!isSignedIn) {
+      openSignIn();
+      toast.info("Please sign in to add items to the cart.", {
+        position: "bottom-right",
+        autoClose: 3000,
+        theme: "colored",
+      });
+      return;
+    }
+
     addToCart(product);
-    toast.success(`${product.title} add in your cart 😀`, {
-      position: "bottom-right", // Position to bottom-right
+    toast.success(`${product.title} added to your cart!`, {
+      position: "bottom-right",
       autoClose: 3000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
       theme: "colored",
     });
   };
 
   const handleAddToWishlist = (product: ICartType) => {
     addToWishlist(product);
-    toast.success(`${product.title} added in your wishlist ☺️`, {
-      position: "bottom-right", // Position to bottom-right
+    toast.success(`${product.title} added to your wishlist!`, {
+      position: "bottom-right",
       autoClose: 3000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
       theme: "colored",
     });
   };
 
-
   const toggleImageModal = () => {
     setIsImageOpen(!isImageOpen);
   };
-
 
   if (loading) {
     return (
@@ -123,26 +127,27 @@ const Page = () => {
       <Navbar />
       <ToastContainer />
       <div className="p-4 md:p-10 bg-gray-50 min-h-screen">
-        <nav className="text-sm flex justify-start gap-x-1 sm:px-10 md:px-[60px] lg:px-[30px] xl:px-[70px] 2xl:px-[80px] text-gray-500 mb-6 px-10 md:pb-4">
+        <nav className="text-sm flex justify-start gap-x-1 sm:px-10 md:px-[60px] lg:px-[30px] xl:pl-[120px] 2xl:px-[160px] text-gray-500 mb-6 px-10 md:pb-4">
           <Link href="/">Home</Link> /{" "}
           <span className="text-black font-semibold">Shop</span>
         </nav>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-y-24 sm:gap-y-44 gap-8">
-          <div className="flex flex-col justify-center items-center sm:items-start pt-10">
-            <div className="col-span-3 flex justify-center items-center sm:items-start px-5 sm:px-10 md:px-[60px] lg:px-[30px] xl:px-[70px] 2xl:px-[80px]">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-y-24 gap-8 pt-7">
+          <div className="flex flex-col justify-center items-center">
+            <div className="col-span-3 flex justify-center items-center">
               <div className="w-full flex items-center justify-center">
                 <Image
                   src={product.imageUrl}
                   alt={product.title}
                   width={500}
                   height={500}
+                  priority
                 />
               </div>
             </div>
           </div>
           <div>
-            <h1 className="pt-14 text-base md:text-xl lg:text-2xl font-bold text-gray-800 mb-4">
+            <h1 className="pt-8 text-xl font-bold text-gray-800 mb-4">
               {product.title}
             </h1>
             <p className="text-yellow-500 mb-2 flex items-center">
@@ -195,26 +200,22 @@ const Page = () => {
             </div>
 
             <div className="flex items-center gap-4">
-              <Link href="/cart"
-                              //  onClick={handleBuyNow} 
-                className="w-2/6 sm:w-3/6 md:w-auto px-3 text-center xs:px-6 lg:px-8 py-3  bg-[#01B5DA] text-white rounded-md hover:bg-[#1F2937]">
-                Buy Now
-              </Link>
+              <button
+                onClick={() => handleAddToCart(product)}
+                className="w-2/6 sm:px-6 py-3 bg-[#01B5DA] text-white rounded-md hover:bg-[#1F2937]"
+              >
+                Add to Cart
+              </button>
               <button
                 onClick={() => handleAddToWishlist(product)}
-                className="w-10  px-3 py-3 border rounded-full bg-white hover:bg-gray-100"
+                className="w-10 px-3 py-3 border rounded-full bg-white hover:bg-gray-100"
               >
                 <BiHeart />
               </button>
               <button
-                onClick={() => handleAddToCart(product)}
-                className="w-10  px-3 py-3 border rounded-full bg-white hover:bg-gray-100"
-              >
-                <IoCartOutline />
-              </button>
-              <button
                 onClick={toggleImageModal}
-                className="w-10 md:w-auto px-3 py-3 border rounded-full bg-white hover:bg-gray-100">
+                className="w-10 px-3 py-3 border rounded-full bg-white hover:bg-gray-100"
+              >
                 <IoEyeOutline />
               </button>
             </div>
@@ -223,20 +224,28 @@ const Page = () => {
       </div>
 
       {isImageOpen && (
-        <div className="fixed inset-0 flex justify-center items-center bg-gray-800 bg-opacity-50 z-50">
-          <div className="relative bg-white p-2 rounded-md">
+        <div
+          className="fixed inset-0 flex justify-center items-center bg-gray-800 bg-opacity-50 z-50"
+          aria-hidden={!isImageOpen}
+        >
+          <div className="relative bg-white p-4 rounded-md">
             <button
               onClick={toggleImageModal}
-              className="absolute top-0 right-0 p-1 px-4 m-1 text-white bg-[#01B5DA] rounded-full"
+              className="absolute top-0 right-0 p-1 px-4 text-white bg-[#01B5DA] rounded-full"
             >
               X
             </button>
-            <Image src={product.imageUrl} alt={product.title} width={400} height={400} />
+            <Image
+              src={product.imageUrl}
+              alt={product.title}
+              width={400}
+              height={400}
+              priority
+            />
           </div>
         </div>
       )}
     </div>
-
   );
 };
 

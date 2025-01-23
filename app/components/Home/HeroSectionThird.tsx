@@ -44,7 +44,7 @@ const HeroSectionThird = async () => {
           Problems trying to resolve the conflict between{" "}
         </p>
       </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-y-20 md:gap-x-5 lg:gap-x-10 gap-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-y-20 sm:gap-x-10 md:gap-x-5 lg:gap-x-10 gap-8">
         {products.map((data: IProduct) => {
           return <div key={data._id} className="flex flex-col justify-center gap-2 items-center">
             <div className="w-[230px]">
