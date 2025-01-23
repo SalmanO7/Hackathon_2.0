@@ -37,8 +37,8 @@ const Page = () => {
   const fetchProduct = useCallback(async () => {
     try {
       if (!id) return;
-      const productData: ICartType = await client.fetch(
-        `*[_type == "product" && _id == $id]{
+      const productData: ICartType = await client.fetch(`
+        *[_type == "product" && _id == $id]{
           _id,
           title,
           description,
@@ -47,7 +47,7 @@ const Page = () => {
           "imageUrl": productImage.asset->url,
           tags
         }[0]`,
-        { id }
+        { id } 
       );
 
       if (!productData) {
@@ -141,7 +141,7 @@ const Page = () => {
                   alt={product.title}
                   width={500}
                   height={500}
-                  priority
+                
                 />
               </div>
             </div>
@@ -202,7 +202,7 @@ const Page = () => {
             <div className="flex items-center gap-4">
               <button
                 onClick={() => handleAddToCart(product)}
-                className="w-2/6 sm:px-6 py-3 bg-[#01B5DA] text-white rounded-md hover:bg-[#1F2937]"
+                className="w-2/6 sm:px-6 md:px-2 lg:text-base md:text-sm py-2 bg-[#01B5DA] text-white rounded-md hover:bg-[#1F2937]"
               >
                 Add to Cart
               </button>
@@ -228,18 +228,18 @@ const Page = () => {
           className="fixed inset-0 flex justify-center items-center bg-gray-800 bg-opacity-50 z-50"
           aria-hidden={!isImageOpen}
         >
-          <div className="relative bg-white p-3 rounded-md">
+          <div className="relative bg-white p-4 rounded-md">
             <button
               onClick={toggleImageModal}
-              className="absolute top-0 right-0 p-1 px-3 m-1 text-white bg-[#01B5DA] rounded-full"
+              className="absolute top-0 right-0 p-1 px-4 text-white bg-[#01B5DA] rounded-full"
             >
               X
             </button>
             <Image
               src={product.imageUrl}
               alt={product.title}
-              width={340}
-              height={340}
+              width={400}
+              height={400}
               priority
             />
           </div>
