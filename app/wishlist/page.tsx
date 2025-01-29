@@ -1,24 +1,30 @@
 "use client";
-import React, { useEffect } from "react";
-import { useCart } from "@/context/Context"; 
+import React, { useEffect, useState } from "react";
+import { useCart } from "@/context/Context";
 import Link from "next/link";
 import Navbar from "../pages/Navbar";
-import { toast, ToastContainer } from "react-toastify"; 
+import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "@/app/components/style.css";
 
 const WishList = () => {
-  const { wishlist, setWishlist } = useCart(); 
+  const { wishlist, setWishlist } = useCart();
 
+  // ✅ Initialize state from localStorage
   useEffect(() => {
-    const storedWishlist = localStorage.getItem("wishlist");
-    if (storedWishlist) {
-      setWishlist(JSON.parse(storedWishlist));
+    if (typeof window !== "undefined") {
+      const storedWishlist = localStorage.getItem("wishlist");
+      if (storedWishlist) {
+        setWishlist(JSON.parse(storedWishlist));
+      }
     }
-  }, [setWishlist]);
+  }, []);
 
+  // ✅ Update localStorage only if wishlist is not empty
   useEffect(() => {
-    localStorage.setItem("wishlist", JSON.stringify(wishlist));
+    if (wishlist.length > 0) {
+      localStorage.setItem("wishlist", JSON.stringify(wishlist));
+    }
   }, [wishlist]);
 
   const removeFromWishlist = (productId: string) => {
@@ -26,15 +32,15 @@ const WishList = () => {
 
     setWishlist(wishlist.filter((item) => item._id !== productId));
 
-  if (removedItem) {
-     toast.info(`Removed "${removedItem.title}" from wishlist`, {
-        position: "bottom-right", // Position to bottom-right
+    if (removedItem) {
+      toast.info(`Removed "${removedItem.title}" from wishlist`, {
+        position: "bottom-right",
         autoClose: 3000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
         draggable: true,
-        className: "custom-toast", // Apply gradient styling
+        className: "custom-toast",
       });
     }
   };
@@ -44,9 +50,8 @@ const WishList = () => {
       <Navbar />
       <div className="p-4 bg-gray-50 min-h-screen sm:px-6 lg:px-9">
         <ToastContainer />
-        <nav className="text-sm flex justify-start gap-x-1 sm:px-10  text-gray-500 mb-6 px-10 md:py-4">
-          <Link href="/">Home</Link> /{" "}
-          <span className="text-black font-semibold">WishList</span>
+        <nav className="text-sm flex justify-start gap-x-1 sm:px-10 text-gray-500 mb-6 px-10 md:py-4">
+          <Link href="/">Home</Link> / <span className="text-black font-semibold">WishList</span>
         </nav>
         <h1 className="text-2xl font-bold text-gray-800 mb-6 pl-4 sm:pl-6 lg:pl-9">
           Your Wishlist
@@ -68,7 +73,6 @@ const WishList = () => {
                 <h3 className="text-lg font-semibold text-gray-800">
                   {product.title}
                 </h3>
-
                 {product.description.split(" ").slice(0, 10).join(" ")}
                 {"..."}
                 <p className="text-lg font-bold text-green-800">
