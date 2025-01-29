@@ -9,10 +9,11 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@clerk/nextjs": "^6.9.15",
+    "@clerk/nextjs": "^6.10.3",
+    "@clerk/shared": "^2.20.14",
     "@sanity/image-url": "^1.1.0",
     "@sanity/vision": "^3.70.0",
-    "next": "15.0.4",
+    "next": "^15.1.6",
     "next-sanity": "^9.8.38",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
@@ -28,6 +29,6 @@
     "@types/react-dom": "^19",
     "postcss": "^8",
     "tailwindcss": "^3.4.1",
-    "typescript": "^5"
+    "typescript": "^5.7.3"
   }
 }

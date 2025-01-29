@@ -1,14 +1,39 @@
-export default {
-    name: "purchase",
-    type: "document",
-    title: "Purchase",
-    fields: [
-        { name: "userId", type: "string", title: "User ID" },
-        { name: "productId", type: "string", title: "Product ID" },
-        { name: "name", type: "string", title: "Name" },
-        { name: "email", type: "string", title: "Email" },
-        { name: "phone", type: "string", title: "Phone" },
-        { name: "address", type: "text", title: "Address" },
-        { name: "date", type: "datetime", title: "Purchase Date" },
-    ],
-};
+import { defineField, defineType } from "sanity";
+
+export default defineType({
+  name: "user",
+  title: "User",
+  type: "document",
+  fields: [
+    defineField({
+      name: "username",
+      title: "Username",
+      type: "string",
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: "email",
+      title: "Email",
+      type: "string",
+      validation: (Rule) => Rule.required().email(),
+    }),
+    defineField({
+      name: "phone",
+      title: "Phone Number",
+      type: "string",
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: "address",
+      title: "Address",
+      type: "string",
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: "orders",
+      title: "Orders",
+      type: "array",
+      of: [{ type: "reference", to: [{ type: "order" }] }],
+    }),
+  ],
+});
