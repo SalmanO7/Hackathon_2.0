@@ -3,6 +3,7 @@ import { useCart } from "@/context/Context";
 import Link from "next/link";
 import { useState } from "react";
 import Navbar from "../pages/Navbar";
+import { v4 as uuidv4 } from "uuid";
 
 const CheckoutPage = () => {
     const { cartItems } = useCart();
@@ -26,14 +27,52 @@ const CheckoutPage = () => {
         setBillingInfo((prev) => ({ ...prev, [name]: value }));
     };
 
-    const handleConfirmOrder = () => {
+    const handleConfirmOrder = async () => {
         if (!billingInfo.username || !billingInfo.email || !billingInfo.phone || !billingInfo.address) {
             alert("Please fill in all billing information!");
             return;
         }
 
-        setShowConfirmation(true);
+        const orderData = {
+            _type: "order",
+            user: {
+                name: billingInfo.username,
+                email: billingInfo.email,
+                contact: billingInfo.phone,
+                address: billingInfo.address,
+            },
+            products: cartItems.map((item) => ({
+                _key: uuidv4(),
+                productId: item.product._id,
+                title: item.product.title,
+                price: item.product.price,
+                quantity: item.quantity,
+                imageUrl: item.product.imageUrl,
+            })),
+            totalAmount: calculateSubtotal(),
+            date: new Date().toISOString(),
+        };
+
+        try {
+            const response = await fetch("/api/order", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ orderData }),
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                console.log(data.message); // Show the success message
+                setShowConfirmation(true);
+            } else {
+                throw new Error("Failed to place order");
+            }
+        } catch (error) {
+            console.error("Error placing order:", error);
+            alert("Something went wrong. Please try again.");
+        }
     };
+
 
     const handleCloseConfirmation = () => {
         setShowConfirmation(false);

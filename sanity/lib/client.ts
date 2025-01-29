@@ -6,5 +6,6 @@ export const client = createClient({
   projectId,
   dataset,
   apiVersion,
+  token: process.env.NEXT_PUBLIC_SANITY_PROJECT_TOKEN,
   useCdn: true, // Set to false if statically generating pages, using ISR or tag-based revalidation
 })

@@ -19,20 +19,23 @@ const CartPage = () => {
 
   // Sync with localStorage whenever cartItems changes
   useEffect(() => {
-    if (cartItems.length > 0) {
-      localStorage.setItem("cartItems", JSON.stringify(cartItems));
-    }
+    localStorage.setItem("cartItems", JSON.stringify(cartItems));
   }, [cartItems]);
 
-  // Remove item from cart and update localStorage
+  // Remove item from cart
   const removeFromCart = (productId: string) => {
     const updatedCart = cartItems.filter((item: any) => item.product._id !== productId);
     setCartItems(updatedCart);
-    localStorage.setItem("cartItems", JSON.stringify(updatedCart));
     toast.info("Item removed from cart", { position: "bottom-right", autoClose: 3000 });
   };
 
-  // Increase quantity and update localStorage
+  // Clear cart
+  const clearCart = () => {
+    setCartItems([]);
+    toast.warning("Cart cleared", { position: "bottom-right", autoClose: 3000 });
+  };
+
+  // Increase quantity
   const handleIncreaseQuantity = (productId: string) => {
     const updatedCart = cartItems.map((item: any) =>
       item.product._id === productId
@@ -40,10 +43,9 @@ const CartPage = () => {
         : item
     );
     setCartItems(updatedCart);
-    localStorage.setItem("cartItems", JSON.stringify(updatedCart));
   };
 
-  // Decrease quantity and update localStorage
+  // Decrease quantity
   const handleDecreaseQuantity = (productId: string) => {
     const updatedCart = cartItems
       .map((item: any) =>
@@ -53,8 +55,10 @@ const CartPage = () => {
       )
       .filter((item: any) => item.quantity > 0);
     setCartItems(updatedCart);
-    localStorage.setItem("cartItems", JSON.stringify(updatedCart));
   };
+
+  // Calculate subtotal
+  const subtotal = cartItems.reduce((acc: number, item: any) => acc + item.product.price * item.quantity, 0);
 
   return (
     <>
@@ -71,7 +75,11 @@ const CartPage = () => {
         </div>
       ) : (
         <div className="p-4 md:p-10 bg-gray-50 min-h-screen">
-          <h1 className="text-2xl font-bold text-gray-800 mb-6">Your Cart</h1>
+          <div className="flex justify-between items-center mb-2">
+            <h1 className="text-2xl font-bold text-gray-800 mb-6">Your Cart</h1>
+            <button onClick={clearCart} className="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-700">Clear Cart</button>
+          </div>
+
           {cartItems.map((item: any) => (
             <div key={item.product._id} className="flex justify-between items-center border-b py-4">
               <div className="flex items-start sm:items-center flex-col gap-2 sm:flex-row">
@@ -91,6 +99,14 @@ const CartPage = () => {
               </div>
             </div>
           ))}
+          <div className="mt-6 p-6 bg-white shadow-md flex flex-col-reverse gap-4 sm:flex-row justify-center sm:justify-between items-center rounded-md">
+            <div className="flex gap-4 ">
+              <Link href="/checkout">
+                <button className="px-4 py-2 bg-[#01B5DA] text-white rounded-md hover:bg-[#1F2937]">Proceed to Checkout</button>
+              </Link>
+            </div>
+            <h2 className="text-lg font-semibold">Subtotal: ${subtotal.toFixed(2)}</h2>
+          </div>
         </div>
       )}
     </>
