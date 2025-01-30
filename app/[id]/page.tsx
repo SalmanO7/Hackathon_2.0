@@ -33,7 +33,7 @@ const Page = () => {
   const { openSignIn } = useClerk(); // Clerk's method to open the sign-in modal
   const { isSignedIn } = useUser(); // Check if the user is signed in
 
-  // Fetch product data
+
   const fetchProduct = useCallback(async () => {
     try {
       if (!id) return;

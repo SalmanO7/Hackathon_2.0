@@ -10,7 +10,6 @@ import "@/app/components/style.css";
 const WishList = () => {
   const { wishlist, setWishlist } = useCart();
 
-  // ✅ Initialize state from localStorage
   useEffect(() => {
     if (typeof window !== "undefined") {
       const storedWishlist = localStorage.getItem("wishlist");
@@ -20,7 +19,6 @@ const WishList = () => {
     }
   }, []);
 
-  // ✅ Update localStorage only if wishlist is not empty
   useEffect(() => {
     if (wishlist.length > 0) {
       localStorage.setItem("wishlist", JSON.stringify(wishlist));
