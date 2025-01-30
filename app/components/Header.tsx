@@ -1,9 +1,9 @@
+import Link from "next/link";
 import React from "react";
 import {
   FaFacebookSquare,
   FaInstagram,
-  FaTwitter,
-  FaYoutube,
+  FaLinkedin,
 } from "react-icons/fa";
 
 const Header = () => {
@@ -20,10 +20,15 @@ const Header = () => {
           <div className="flex items-center gap-4">
             <span className="text-sm  hidden sm:inline">Follow Us</span>
             <div className="flex items-center space-x-2">
-              <FaInstagram />
-              <FaYoutube />
-              <FaFacebookSquare />
-              <FaTwitter />
+              <Link href="https://www.instagram.com/salmanop402/" >
+                <FaInstagram />
+              </Link>
+              <Link href="https://web.facebook.com/SalmanO4/">
+                <FaFacebookSquare />
+              </Link>
+              <Link href="https://www.linkedin.com/in/muhammad-salman-801a402a5">
+                <FaLinkedin />
+              </Link>
             </div>
           </div>
         </div>

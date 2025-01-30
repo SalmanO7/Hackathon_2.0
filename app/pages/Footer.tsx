@@ -1,5 +1,6 @@
+import Link from "next/link";
 import React from "react";
-import { FaFacebookSquare, FaInstagram, FaTwitter } from "react-icons/fa";
+import { FaFacebookSquare, FaInstagram, FaLinkedin } from "react-icons/fa";
 
 const Footer = () => {
   return (
@@ -7,9 +8,15 @@ const Footer = () => {
       <div className="flex max-w-full flex-col gap-y-10 py-8 bg-gray-50 md:flex-row justify-between items-center px-5 sm:px-10 md:px-[60px] lg:px-[30px] xl:px-[70px] 2xl:px-[100px]">
         <h1 className="text-2xl font-bold ">Bandage</h1>
         <div className="flex text-blue-500 text-xl justify-center items-center gap-3">
-          <FaInstagram />
-          <FaFacebookSquare />
-          <FaTwitter />
+          <Link href="https://www.instagram.com/salmanop402/" >
+            <FaInstagram />
+          </Link>
+          <Link href="https://web.facebook.com/SalmanO4/">
+            <FaFacebookSquare />
+          </Link>
+          <Link href="https://www.linkedin.com/in/muhammad-salman-801a402a5">
+            <FaLinkedin />
+          </Link>
         </div>
       </div>
 
