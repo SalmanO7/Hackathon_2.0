@@ -2,12 +2,13 @@
 import Header from "@/app/components/Header";
 import { useCart } from "@/context/Context";
 import { client } from "@/sanity/lib/client";
-import { SignedIn, SignedOut, useClerk, UserButton } from '@clerk/nextjs';
+import { SignedIn, SignedOut, useClerk, UserButton } from "@clerk/nextjs";
 import Link from "next/link";
 import React, { useState, useEffect } from "react";
 import { CiUser } from "react-icons/ci";
 import { FaRegHeart } from "react-icons/fa";
 import { IoCartOutline, IoSearchOutline, IoClose } from "react-icons/io5";
+import { useUser } from "@clerk/nextjs";
 
 interface IProduct {
   _id: string;
@@ -26,9 +27,25 @@ const Navbar = () => {
   const [allProducts, setAllProducts] = useState<IProduct[]>([]);
   const { cartItems, wishlist } = useCart();
   const { openSignIn } = useClerk();
-  
-  
-  
+  const { user, isLoaded } = useUser(); // Get Clerk user info
+  const [isAdmin, setIsAdmin] = useState(false);
+
+  // Debug: Check user object
+  useEffect(() => {
+    console.log("User object:", user); // Debugging user object
+  }, [user]);
+
+  useEffect(() => {
+    if (isLoaded && user?.publicMetadata) {
+      console.log("User Metadata:", user.publicMetadata); // Debugging metadata
+      if (user.publicMetadata.role === "salman_admin") {
+        setIsAdmin(true);
+      } else {
+        setIsAdmin(false);
+      }
+    }
+  }, [isLoaded, user]);
+
   const getData = async () => {
     const data = await client.fetch(
       `*[_type == "product"]{
@@ -49,7 +66,7 @@ const Navbar = () => {
       const results = allProducts.filter((product) =>
         product.title.toLowerCase().includes(query.toLowerCase())
       );
-      setFilteredResults(results.slice(0, 3)); // Limit to 3 results
+      setFilteredResults(results.slice(0, 3));
     } else {
       setFilteredResults([]);
     }
@@ -64,7 +81,7 @@ const Navbar = () => {
   const toggleSearchBar = () => {
     setIsSearchActive((prevState) => !prevState);
     if (isSearchActive) {
-      clearSearch(); // Close and clear the search when clicked again
+      clearSearch();
     }
   };
 
@@ -96,6 +113,9 @@ const Navbar = () => {
             </Link>
             <Link href="/contact" className="text-gray-700 hover:text-gray-900">
               Contact
+            </Link>
+            <Link href="/admin" className="text-gray-700 hover:text-gray-900">
+              {isAdmin ? "Admin Dashboard" : ""}
             </Link>
           </div>
 
@@ -149,7 +169,7 @@ const Navbar = () => {
             <SignedOut>
               <button
                 className="flex items-center justify-center w-8 h-8 rounded-full bg-gray-700 text-white"
-                onClick={() => openSignIn()} 
+                onClick={() => openSignIn()}
               >
                 <CiUser className="text-xl" />
               </button>
@@ -165,8 +185,6 @@ const Navbar = () => {
               />
             </SignedIn>
           </div>
-
-
 
           <button
             className="md:hidden text-gray-600"
