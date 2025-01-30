@@ -5,9 +5,9 @@ import React from "react";
 const HeroSection = () => {
   return (
     <div
-      className="w-full h-[100vh] bg-cover bg-center"
+      className="w-full bg-[url('/assets/Shop-hero.jpg')] sm:bg-[url('/assets/shop-hero-1-product-slide-1.jpg')] h-[100vh] bg-cover bg-center bg-no-repeat sm:bg-[center_top]"
       style={{
-        backgroundImage: "url('/assets/shop-hero-1-product-slide-1.jpg')",
+        // backgroundImage: "url('/assets/shop-hero-1-product-slide-1.jpg')",
       }}
     >
       <div className="text-white h-screen flex flex-col justify-center md:pb-10  xl:pb-14 2xl:pb-28 items-start md:items-start  gap-6 px-6 sm:px-10 md:px-20 xl:px-32">

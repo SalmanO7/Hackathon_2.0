@@ -6,6 +6,9 @@ export default {
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
+  safelist: [
+    "bg-[url('/assets/shop-hero-1-product-slide-1.jpg')]"
+  ],
   theme: {
     extend: {
       colors: {

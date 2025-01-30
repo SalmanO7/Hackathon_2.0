@@ -8,24 +8,20 @@ import { useUser } from "@clerk/nextjs";
 export default function AboutNavbar() {
   const [isOpen, setIsOpen] = useState(false);
   const { openSignIn } = useClerk();
-  const { user, isLoaded } = useUser(); // Get Clerk user info
+  const { user, isLoaded } = useUser(); 
   const [isAdmin, setIsAdmin] = useState(false);
 
-  // Debug: Check user object
-  useEffect(() => {
-    console.log("User object:", user); // Debugging user object
-  }, [user]);
 
   useEffect(() => {
-    if (isLoaded && user?.publicMetadata) {
-      console.log("User Metadata:", user.publicMetadata); // Debugging metadata
-      if (user.publicMetadata.role === "salman_admin") {
-        setIsAdmin(true);
-      } else {
-        setIsAdmin(false);
-      }
+    if (!isLoaded) return;
+
+    if (user?.publicMetadata?.role === "salman_admin") {
+      setIsAdmin(true);
+    } else {
+      setIsAdmin(false);
     }
   }, [isLoaded, user]);
+
 
 
   return (
@@ -70,7 +66,7 @@ export default function AboutNavbar() {
           </li>
           <li>
             <Link href="/admin" className="text-gray-700 hover:text-gray-900">
-              {isAdmin ? "Admin Dashboard" : ""}
+              {isAdmin ? "Dashboard" : ""}
             </Link>
           </li>
         </ul>
@@ -166,7 +162,7 @@ export default function AboutNavbar() {
                 href="/admin"
                 className="text-gray-700 font-medium hover:text-blue-600"
               >
-                {isAdmin ? "Admin Dashboard" : ""}
+                {isAdmin ? "Dashboard" : ""}
               </Link>
             </li>
             <li>
