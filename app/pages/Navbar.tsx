@@ -258,6 +258,12 @@ const Navbar = () => {
               >
                 Contact
               </Link>
+              <Link
+                href="/admin"
+                className="text-gray-700 font-medium hover:text-blue-600"
+              >
+                {isAdmin ? "Admin Dashboard" : ""}
+              </Link>
             </div>
           </div>
         )}

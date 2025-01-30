@@ -1,13 +1,32 @@
 "use client";
 import Link from "next/link";
-import React, { useState } from "react";
-import { SignedIn, SignedOut, useClerk, UserButton } from '@clerk/nextjs';
+import React, { useEffect, useState } from "react";
+import { SignedIn, SignedOut, useClerk, UserButton } from "@clerk/nextjs";
 import { CiUser } from "react-icons/ci";
-
+import { useUser } from "@clerk/nextjs";
 
 export default function AboutNavbar() {
   const [isOpen, setIsOpen] = useState(false);
   const { openSignIn } = useClerk();
+  const { user, isLoaded } = useUser(); // Get Clerk user info
+  const [isAdmin, setIsAdmin] = useState(false);
+
+  // Debug: Check user object
+  useEffect(() => {
+    console.log("User object:", user); // Debugging user object
+  }, [user]);
+
+  useEffect(() => {
+    if (isLoaded && user?.publicMetadata) {
+      console.log("User Metadata:", user.publicMetadata); // Debugging metadata
+      if (user.publicMetadata.role === "salman_admin") {
+        setIsAdmin(true);
+      } else {
+        setIsAdmin(false);
+      }
+    }
+  }, [isLoaded, user]);
+
 
   return (
     <nav className="bg-white shadow-md">
@@ -15,7 +34,6 @@ export default function AboutNavbar() {
         <h1 className="text-lg font-bold text-gray-900">
           <Link href="/">Bandage</Link>
         </h1>
-
 
         <ul className="hidden md:flex items-center gap-6">
           <li>
@@ -50,6 +68,11 @@ export default function AboutNavbar() {
               Contact
             </Link>
           </li>
+          <li>
+            <Link href="/admin" className="text-gray-700 hover:text-gray-900">
+              {isAdmin ? "Admin Dashboard" : ""}
+            </Link>
+          </li>
         </ul>
 
         <div className="hidden md:flex items-center gap-4">
@@ -59,7 +82,7 @@ export default function AboutNavbar() {
           <UserButton
             appearance={{
               elements: {
-                userButtonAvatarBox: 'w-8 h-8 rounded-full',
+                userButtonAvatarBox: "w-8 h-8 rounded-full",
               },
             }}
           />
@@ -136,6 +159,14 @@ export default function AboutNavbar() {
                 className="text-gray-700 font-medium hover:text-blue-600"
               >
                 Contact
+              </Link>
+            </li>
+            <li>
+              <Link
+                href="/admin"
+                className="text-gray-700 font-medium hover:text-blue-600"
+              >
+                {isAdmin ? "Admin Dashboard" : ""}
               </Link>
             </li>
             <li>
