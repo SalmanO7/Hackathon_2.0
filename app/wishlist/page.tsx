@@ -28,7 +28,8 @@ const WishList = () => {
   const removeFromWishlist = (productId: string) => {
     const removedItem = wishlist.find((item) => item._id === productId);
 
-    setWishlist(wishlist.filter((item) => item._id !== productId));
+    const updatedWishlist = wishlist.filter((item) => item._id !== productId);
+    setWishlist(updatedWishlist);
 
     if (removedItem) {
       toast.info(`Removed "${removedItem.title}" from wishlist`, {
@@ -63,16 +64,17 @@ const WishList = () => {
                 key={product._id}
                 className="border p-4 rounded-md bg-white shadow-md flex flex-col items-start"
               >
-                <img
-                  src={product.imageUrl}
-                  alt={product.title}
-                  className="w-full h-48 object-cover rounded-md mb-4"
-                />
+                <Link href={`/${product._id}`} className="w-full">
+                  <img
+                    src={product.imageUrl}
+                    alt={product.title}
+                    className="w-full h-64 object-cover rounded-md mb-4"
+                  />
+                </Link>
                 <h3 className="text-lg font-semibold text-gray-800">
                   {product.title}
                 </h3>
                 {product.description.split(" ").slice(0, 10).join(" ")}
-                {"..."}
                 <p className="text-lg font-bold text-green-800">
                   ${product.price}
                 </p>

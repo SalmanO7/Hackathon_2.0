@@ -94,7 +94,7 @@ const Navbar = () => {
       <nav className="bg-white shadow-md">
         <div className="container mx-auto flex items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
           <h1 className="text-lg font-bold text-gray-900">
-            <Link href="/">Bandage</Link>
+            <Link href="/" className="font-serif">Ease Store</Link>
           </h1>
 
           <div className="hidden md:flex items-center gap-6">

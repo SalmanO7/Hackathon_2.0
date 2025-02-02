@@ -8,7 +8,6 @@ import "react-toastify/dist/ReactToastify.css";
 import "@/app/components/style.css";
 
 const CartPage = () => {
-  const { increaseQuantity, decreaseQuantity } = useCart();
   const [cartItems, setCartItems] = useState(() => {
     if (typeof window !== "undefined") {
       const savedCart = localStorage.getItem("cartItems");
@@ -17,12 +16,10 @@ const CartPage = () => {
     return [];
   });
 
-  // Sync with localStorage whenever cartItems changes
   useEffect(() => {
     localStorage.setItem("cartItems", JSON.stringify(cartItems));
   }, [cartItems]);
 
-  // Remove item from cart
   const removeFromCart = (productId: string) => {
     const updatedCart = cartItems.filter((item: any) => item.product._id !== productId);
     setCartItems(updatedCart);

@@ -30,8 +30,8 @@ const Page = () => {
   const [isImageOpen, setIsImageOpen] = useState(false);
 
   const { addToCart, addToWishlist } = useCart();
-  const { openSignIn } = useClerk(); // Clerk's method to open the sign-in modal
-  const { isSignedIn } = useUser(); // Check if the user is signed in
+  const { openSignIn } = useClerk();
+  const { isSignedIn } = useUser(); 
 
 
   const fetchProduct = useCallback(async () => {

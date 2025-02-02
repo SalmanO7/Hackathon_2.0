@@ -2,3 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
+body {
+    @apply font-poppins; /* Use the Tailwind class */
+}

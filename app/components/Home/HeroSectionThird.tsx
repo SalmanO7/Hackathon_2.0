@@ -12,7 +12,6 @@ interface IProduct {
   imageUrl: string;
 }
 
-
 const getData = async () => {
   const data = await client.fetch(` *[_type == "product"]{
   _id,
@@ -27,12 +26,7 @@ const getData = async () => {
   return data
 }
 
-const HeroSectionThird = async () => {
-
-
-
-
-  
+const HeroSectionThird = async () => { 
 
   const products = await getData()
   return (

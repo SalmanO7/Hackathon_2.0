@@ -3,7 +3,7 @@ import Home from "./pages/Home";
 
 const page = () => {
   return (
-    <div className="w-full">
+    <div className="w-full font-poppins">
       <Home />
     </div>
   );

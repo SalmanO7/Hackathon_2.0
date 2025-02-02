@@ -1,11 +1,22 @@
+import { Poppins } from "next/font/google";
 import type { Metadata } from "next";
 import localFont from "next/font/local";
-import "./globals.css";
 import Footer from "./pages/Footer";
 import { CartProvider } from "@/context/Context";
 import {
   ClerkProvider,
 } from '@clerk/nextjs'
+import "./globals.css";  // Keep Tailwind and other styles
+
+
+
+
+const poppins = Poppins({
+  subsets: ["latin"],
+  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
+  style: ["normal", "italic"],
+  variable: "--font-poppins", // Custom CSS variable
+});
 
 
 const geistSans = localFont({

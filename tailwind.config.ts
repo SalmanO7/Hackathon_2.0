@@ -18,6 +18,9 @@ export default {
       screens: {
         xs: "400px", // Custom screen size for 400px
       },
+      fontFamily: {
+        poppins: "var(--font-poppins), sans-serif", // Use Poppins
+      },
     },
   },
   plugins: [],
