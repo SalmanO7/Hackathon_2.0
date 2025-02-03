@@ -40,7 +40,8 @@ const AdminRoute = async () => {
     // Rendering orders if data is available
     return (
         <div>
-            {orders && orders.length > 0 ? (
+            <h1>hellow Worl</h1>
+            {/* {orders && orders.length > 0 ? (
                 orders.map((order: any) => (
                     <div key={order.id}>
                         <h2>Order by {order.user?.name || 'Unknown User'}</h2>
@@ -62,7 +63,7 @@ const AdminRoute = async () => {
                 ))
             ) : (
                 <p>No orders available</p>
-            )}
+            )} */}
         </div>
     )
 }

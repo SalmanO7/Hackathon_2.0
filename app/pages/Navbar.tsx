@@ -30,10 +30,6 @@ const Navbar = () => {
   const { user, isLoaded } = useUser(); // Get Clerk user info
   const [isAdmin, setIsAdmin] = useState(false);
 
-  // useEffect(() => {
-  //   if (user) {
-  //    }
-  // }, [user]);
 
   useEffect(() => {
     if (!isLoaded) return;
@@ -178,7 +174,7 @@ const Navbar = () => {
               <UserButton
                 appearance={{
                   elements: {
-                    userButtonAvatarBox: "w-8 h-8 rounded-full", // Customize avatar appearance
+                    userButtonAvatarBox: "w-8 h-8 rounded-full", 
                   },
                 }}
               />
@@ -223,7 +219,6 @@ const Navbar = () => {
           </button>
         </div>
 
-        {/* Mobile Menu */}
         {isOpen && (
           <div className="md:hidden bg-gray-100">
             <div className="flex flex-col items-center py-4 gap-3">
@@ -268,7 +263,7 @@ const Navbar = () => {
         )}
       </nav>
 
-      {/* Search Results */}
+  
       {searchQuery && filteredResults.length > 0 && (
         <div className="absolute top-44 left-0 w-full bg-white shadow-md z-10">
           <div className="flex flex-col items-start pl-10 sm:pl-44 py-4 gap-3">

@@ -4,7 +4,7 @@ import { FaFacebookSquare, FaInstagram, FaLinkedin } from "react-icons/fa";
 
 const Footer = () => {
   return (
-    <div className="mt-36">
+    <div className="">
       <div className="flex max-w-full flex-col gap-y-10 py-8 bg-gray-50 md:flex-row justify-between items-center px-5 sm:px-10 md:px-[60px] lg:px-[30px] xl:px-[70px] 2xl:px-[100px]">
         <h1 className="text-2xl font-bold ">Bandage</h1>
         <div className="flex text-blue-500 text-xl justify-center items-center gap-3">
