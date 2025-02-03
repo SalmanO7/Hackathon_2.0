@@ -6,7 +6,7 @@ import Navbar from "../pages/Navbar";
 import { v4 as uuidv4 } from "uuid";
 import toast, { Toaster } from "react-hot-toast";
 import { FaCheckCircle } from "react-icons/fa";
-import { motion } from "framer-motion"; // Import Framer Motion for animations
+import { motion } from "framer-motion";
 
 const CheckoutPage = () => {
     const { cartItems } = useCart();
@@ -228,11 +228,10 @@ const CheckoutPage = () => {
                             <p className="text-gray-700">Your order will be delivered to:</p>
                             <p className="text-gray-700 font-semibold">{billingInfo.address}</p>
 
-                            {/* Animated Confetti/Emoji Celebration */}
                             <motion.div
                                 animate={{
-                                    x: [0, -50, 20, 0], // Move emoji left and right
-                                    rotate: [0, 45, 0], // Rotate emoji for celebration effect
+                                    x: [0, -50, 20, 0], 
+                                    rotate: [0, 45, 0], 
                                 }}
                                 transition={{
                                     repeat: Infinity,

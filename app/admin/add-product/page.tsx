@@ -1,9 +1,9 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { client } from "@/sanity/lib/client";
-import Navbar from "../pages/Navbar";
+import Navbar from "../../pages/Navbar";
 import { v4 as uuidv4 } from "uuid";
-import AdminNavbar from "../pages/AdminNavbar";
+import AdminNavbar from "../../pages/AdminNavbar";
 
 const AdminDashboard = () => {
   const [orders, setOrders] = useState<any[]>([]);
@@ -64,7 +64,7 @@ const AdminDashboard = () => {
   const handleImageUpload = async (file: File) => {
     try {
       const asset = await client.assets.upload("image", file);
-      return asset._id; // Returns the image asset ID to use in the product document
+      return asset._id; 
     } catch (error) {
       console.error("Error uploading image:", error);
       alert("Failed to upload image. Please try again.");
@@ -108,7 +108,6 @@ const AdminDashboard = () => {
       const response = await client.create(newProduct);
       console.log("Product added:", response);
 
-      // Reset form fields
       setTitle("");
       setDescription("");
       setPrice("");

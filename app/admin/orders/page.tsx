@@ -1,8 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { client } from "@/sanity/lib/client";
-import Navbar from "../pages/Navbar";
-import AdminNavbar from "../pages/AdminNavbar";
+import AdminNavbar from "../../pages/AdminNavbar";
 
 const AdminDashboard = () => {
   const [orders, setOrders] = useState<any[]>([]);
@@ -57,7 +56,6 @@ const AdminDashboard = () => {
 
   return (
     <div>
-      <Navbar />
       <AdminNavbar />
       {orders && orders.length > 0 ? (
         orders
