@@ -31,6 +31,8 @@ interface CartContextProps {
   addToWishlist: (product: ICartType) => void;
   wishlist: ICartType[];
   setWishlist: React.Dispatch<React.SetStateAction<ICartType[]>>;
+  subtotal: number; // Include subtotal in the context
+  setSubtotal: React.Dispatch<React.SetStateAction<number>>;
 }
 
 const CartContext = createContext<CartContextProps | undefined>(undefined);
@@ -38,6 +40,7 @@ const CartContext = createContext<CartContextProps | undefined>(undefined);
 export const CartProvider = ({ children }: { children: ReactNode }) => {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [wishlist, setWishlist] = useState<ICartType[]>([]);
+  const [subtotal, setSubtotal] = useState(0); //
 
   useEffect(() => {
     const storedCartItems = localStorage.getItem("cartItems");
@@ -116,6 +119,8 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
         wishlist,
         setWishlist,
         addToWishlist,
+        subtotal,
+        setSubtotal,
       }}
     >
       {children}

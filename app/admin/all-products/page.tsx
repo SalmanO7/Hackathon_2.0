@@ -89,7 +89,7 @@ const AllProducts = () => {
                     Delete
                   </button>
                   <button
-                    onClick={() => router.push(`/edit-product/${product._id}`)}
+                    onClick={() => router.push(`/admin/edit-product/${product._id}`)}
                     className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700"
                   >
                     Edit

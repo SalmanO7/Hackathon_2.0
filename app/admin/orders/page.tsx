@@ -126,7 +126,7 @@ const AdminDashboard = () => {
                 </ul>
               </div>
 
-              {/* Total Amount */}
+    
               <div className="flex items-center justify-between mt-4 border-t pt-4">
                 <p className="text-lg font-semibold text-gray-800">
                   Total Amount
