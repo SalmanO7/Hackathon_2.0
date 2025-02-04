@@ -1,7 +1,9 @@
 import Navbar from "../pages/Navbar"
 
 interface IParams {
-    searchParams: Record<string, string | undefined>;
+    searchParams: {
+        amount: string;
+    }
 }
 const PaymentSuccess = ({ searchParams }: IParams) => {
 
