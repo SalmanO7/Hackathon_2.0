@@ -1,6 +1,5 @@
 "use client";
 import { useEffect, useState } from "react";
-import { useCart } from "@/context/Context";
 import Navbar from "../pages/Navbar";
 import Link from "next/link";
 import { toast, ToastContainer } from "react-toastify";
