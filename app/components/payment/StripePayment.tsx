@@ -4,37 +4,40 @@ import CheckoutPage from "@/app/components/payment/CheckoutPage";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import { useCart } from "@/context/Context";
+import { useSearchParams } from "next/navigation";
 
 if (process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY === undefined) {
-  throw new Error("NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY is not defined");
+    throw new Error("NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY is not defined");
 }
 
 const stripePromise = loadStripe(
-  process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
+    process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
 );
 
 const StripePayment = () => {
-  const { subtotal } = useCart();
+    const searchParams = useSearchParams();
+    const price = parseFloat(searchParams.get("amount") || "1"); // Default to $80 if not provided
+    const { subtotal } = useCart();
 
-  const amount = subtotal;
-  return (
-    <div>
-      <h1 className="text-2xl font-bold text-center">
-        Muhammad Salman has requested ${amount}
-      </h1>
+    const validAmount = !isNaN(subtotal) && subtotal > 0 ? subtotal : price;
+    return (
+        <div>
+            <h1 className="text-2xl font-bold text-center">
+                Muhammad Salman has requested ${validAmount}
+            </h1>
 
-      <Elements
-        stripe={stripePromise}
-        options={{
-          mode: "payment",
-          amount: convertToSubCurrency(amount),
-          currency: "usd",
-        }}
-      >
-        <CheckoutPage amount={amount} />
-      </Elements>
-    </div>
-  );
+            <Elements
+                stripe={stripePromise}
+                options={{
+                    mode: "payment",
+                    amount: convertToSubCurrency(validAmount),
+                    currency: "usd",
+                }}
+            >
+                <CheckoutPage amount={validAmount} />
+            </Elements>
+        </div>
+    );
 };
 
 export default StripePayment;

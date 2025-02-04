@@ -1,14 +1,15 @@
+import Navbar from "../pages/Navbar"
 
 interface IParams {
     searchParams: {
         amount: number
     }
 }
-
 const PaymentSuccess = ({ searchParams }: IParams) => {
     return (
         <div className="text-center w-full">
-            <h1 className="text-6xl">Thank you for purchasing $ {searchParams.amount}</h1>
+            <Navbar />
+            <h1 className="text-6xl mt-16">Thank you for purchasing $ {searchParams.amount}</h1>
         </div>
     )
 }
