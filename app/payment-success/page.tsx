@@ -2,7 +2,7 @@ import Navbar from "../pages/Navbar"
 
 const PaymentSuccess = ({ searchParams }: any) => {
 
-    const amount = parseFloat(searchParams.amount || "80");
+    const amount = parseFloat(searchParams.amount || "100");
 
     return (
         <div className="text-center w-full">
