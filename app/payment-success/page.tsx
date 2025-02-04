@@ -1,11 +1,6 @@
 import Navbar from "../pages/Navbar"
 
-interface IParams {
-    searchParams: {
-        amount: string;
-    }
-}
-const PaymentSuccess = ({ searchParams }: IParams) => {
+const PaymentSuccess = ({ searchParams }: any) => {
 
     const amount = parseFloat(searchParams.amount || "80");
 
