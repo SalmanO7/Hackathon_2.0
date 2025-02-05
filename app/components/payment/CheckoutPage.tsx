@@ -1,12 +1,9 @@
-
 'use client'
 import { useState, useEffect, Suspense } from 'react'
 import { useStripe, useElements, PaymentElement } from '@stripe/react-stripe-js'
 import convertToSubCurrency from '@/app/lib/ConvertToSubCurrency'
 
 const CheckoutPage = ({ amount }: { amount: number }) => {
-    console.log(window.location.host)
-
     const myhost = window.location.host
     let URL = '';
 
