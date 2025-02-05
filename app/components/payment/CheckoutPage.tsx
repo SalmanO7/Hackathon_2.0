@@ -39,7 +39,6 @@ const CheckoutPage = ({ amount }: { amount: number }) => {
         e.preventDefault()
         setLoading(true)
 
-        // Error handling
         if (!stripe || !elements) {
             return
         }

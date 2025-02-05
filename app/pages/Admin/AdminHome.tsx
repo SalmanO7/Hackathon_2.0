@@ -43,7 +43,7 @@ const AdminHome = () => {
     <div className="bg-gray-100 min-h-screen pb-28">
       <div className="p-6 max-w-6xl mx-auto">
         <h2 className="text-3xl font-bold text-gray-800 mb-6">
-          Admin Dashboard
+          Dashboard
         </h2>
 
         {loading ? (

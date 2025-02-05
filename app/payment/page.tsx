@@ -27,7 +27,6 @@ export default function Home() {
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        // Display a success notification
         toast.success("Rental booking successful!");
     };
 

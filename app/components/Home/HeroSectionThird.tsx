@@ -26,7 +26,7 @@ const getData = async () => {
   return data
 }
 
-const HeroSectionThird = async () => { 
+const HeroSectionThird = async () => {
 
   const products = await getData()
   return (
@@ -41,13 +41,13 @@ const HeroSectionThird = async () => {
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-y-20 sm:gap-x-10 md:gap-x-5 lg:gap-x-10 gap-8">
         {products.map((data: IProduct) => {
           return <div key={data._id} className="flex flex-col justify-center gap-2 items-center">
-            <div className="w-[230px]">
-              <Link href={`/${data._id}`} >
-                <Image src={data.imageUrl} alt={data.title} width={225} height={100}  />
+            <div className="w-[230px] shadow-xl">
+              <Link href={`/${data._id}`} className="" >
+                <img src={data.imageUrl} alt={data.title} className="h-56 w-full" />
               </Link>
             </div>
             <h2 className="font-semibold">{data.title}</h2>
-            <h4 className="text-gray-500">{data.description.split(" ").slice(0, 3).join(" ")}</h4>
+            <h4 className="text-gray-500 w-full text-center">{data.description.split(" ").slice(0, 2).join(" ")}</h4>
 
             {
               data.dicountPercentage > 0 ?
