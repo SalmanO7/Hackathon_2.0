@@ -16,7 +16,7 @@ const stripePromise = loadStripe(
 
 const StripePayment = () => {
     const searchParams = useSearchParams();
-    const price = parseFloat(searchParams.get("amount") || "10"); // Default to $10 if not provided
+    const price = parseFloat(searchParams.get("amount") || "10"); 
     const { subtotal } = useCart();
 
     const validAmount = subtotal && !isNaN(subtotal) && subtotal > 0 ? subtotal : price;

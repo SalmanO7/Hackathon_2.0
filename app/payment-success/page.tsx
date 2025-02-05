@@ -1,3 +1,4 @@
+"use client"
 import Navbar from "../pages/Navbar"
 
 const PaymentSuccess = ({ searchParams }: any) => {

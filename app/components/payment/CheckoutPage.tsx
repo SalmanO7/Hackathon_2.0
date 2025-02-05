@@ -22,7 +22,6 @@ const CheckoutPage = ({ amount }: { amount: number }) => {
     const [loading, setLoading] = useState(false)
 
 
-    // as the payment method changes it is necessary to generate a new client secret.
     useEffect(() => {
         fetch('api/payment-intent', {
             method: 'POST',
