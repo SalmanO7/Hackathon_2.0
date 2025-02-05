@@ -16,10 +16,10 @@ const stripePromise = loadStripe(
 
 const StripePayment = () => {
     const searchParams = useSearchParams();
-    const price = parseFloat(searchParams.get("amount") || "1"); // Default to $80 if not provided
+    const price = parseFloat(searchParams.get("amount") || "10"); // Default to $10 if not provided
     const { subtotal } = useCart();
 
-    const validAmount = !isNaN(subtotal) && subtotal > 0 ? subtotal : price;
+    const validAmount = subtotal && !isNaN(subtotal) && subtotal > 0 ? subtotal : price;
     return (
         <div>
             <h1 className="text-2xl font-bold text-center">
