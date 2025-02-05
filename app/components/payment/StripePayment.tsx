@@ -15,8 +15,9 @@ const stripePromise = loadStripe(
 );
 
 const StripePayment = () => {
+
     const searchParams = useSearchParams();
-    const price = parseFloat(searchParams.get("amount") || "10"); 
+    const price = parseFloat(searchParams.get("amount") || "10");
     const { subtotal } = useCart();
 
     const validAmount = subtotal && !isNaN(subtotal) && subtotal > 0 ? subtotal : price;
@@ -25,7 +26,6 @@ const StripePayment = () => {
             <h1 className="text-2xl font-bold text-center">
                 Muhammad Salman has requested ${validAmount}
             </h1>
-
             <Elements
                 stripe={stripePromise}
                 options={{
