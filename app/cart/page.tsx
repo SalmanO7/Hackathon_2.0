@@ -155,7 +155,9 @@ const CartPage = () => {
           ))}
           <div className="mt-6 p-6 bg-white shadow-md flex flex-col-reverse gap-4 sm:flex-row justify-center sm:justify-between items-center rounded-md">
             <div className="flex gap-4 ">
-              <Link href="/checkout">
+              <Link
+                href={`/payment?amount=${subtotal.toFixed(2)}`}
+              >
                 <button className="px-4 py-2 bg-[#01B5DA] text-white rounded-md hover:bg-[#1F2937]">
                   Proceed to Checkout
                 </button>
