@@ -23,7 +23,7 @@ const StripePayment = () => {
     const validAmount = subtotal && !isNaN(subtotal) && subtotal > 0 ? subtotal : price;
     return (
         <div>
-            <h1 className="text-2xl font-bold text-center">
+            <h1 className="text-2xl font-bold text-start mt-8">
                 Muhammad Salman has requested ${validAmount}
             </h1>
             <Elements
