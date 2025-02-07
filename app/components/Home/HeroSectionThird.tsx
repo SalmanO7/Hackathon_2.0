@@ -43,7 +43,7 @@ const HeroSectionThird = async () => {
           return <div key={data._id} className="flex flex-col justify-center gap-2 items-center">
             <div className="w-[230px] shadow-xl">
               <Link href={`/${data._id}`} className="" >
-                <img src={data.imageUrl} alt={data.title} className="h-56 w-full" />
+                <img src={data.imageUrl} alt={data.title} className="sm:h-64 w-full" />
               </Link>
             </div>
             <h2 className="font-semibold">{data.title}</h2>

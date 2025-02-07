@@ -63,10 +63,7 @@ const CheckoutPage = () => {
                 toast.success("Order Confirmed and Published in Sanity!");
                 localStorage.removeItem("cartItems");
                 setCartItems([]);
-
-                setTimeout(() => {
-                    router.push(`/payment?amount=${subtotal.toFixed(2)}`);
-                }, 1000);
+                router.push(`/payment?amount=${subtotal.toFixed(2)}`);
             } else {
                 toast.error("Failed to place order.");
             }
@@ -108,6 +105,7 @@ const CheckoutPage = () => {
                             <span>Total:</span>
                             <span>${subtotal.toFixed(2)}</span>
                         </div>
+
                         <form onSubmit={handleSubmit} className="mt-6">
                             <h2 className="text-xl font-semibold mb-4">User Details</h2>
                             <input type="text" name="name" placeholder="Name" value={userData.name} onChange={handleChange} className="w-full p-2 mb-4 border rounded" required />

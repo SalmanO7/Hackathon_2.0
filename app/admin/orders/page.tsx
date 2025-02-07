@@ -88,10 +88,12 @@ const AdminDashboard = () => {
                   Email:{" "}
                   <span className="font-medium">{order.user?.email}</span>
                 </p>
-                <p className="text-gray-700">
-                  Contact:{" "}
-                  <span className="font-medium">{order.user?.contact}</span>
-                </p>
+                {order.user?.contact && (
+                  <p className="text-gray-700">
+                    Contact:{" "}
+                    <span className="font-medium">{order.user?.contact}</span>
+                  </p>
+                )}
                 <p className="text-gray-700">
                   Address:{" "}
                   <span className="font-medium">{order.user?.address}</span>
@@ -126,7 +128,7 @@ const AdminDashboard = () => {
                 </ul>
               </div>
 
-    
+
               <div className="flex items-center justify-between mt-4 border-t pt-4">
                 <p className="text-lg font-semibold text-gray-800">
                   Total Amount
