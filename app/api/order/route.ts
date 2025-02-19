@@ -5,14 +5,13 @@ const sanityClient = createClient({
   projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID!,
   dataset: "production",
   useCdn: false,
-  token: process.env.NEXT_PUBLIC_SANITY_PROJECT_TOKEN, // Add in .env file
+  token: process.env.NEXT_PUBLIC_SANITY_PROJECT_TOKEN,
 });
 
 export async function POST(req: Request) {
   try {
     const { orderData } = await req.json();
 
-    // Create order document in Sanity
     const order = await sanityClient.create({
       _type: "order",
       user: orderData.user,
